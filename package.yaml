@@ -1,0 +1,50 @@
+name:                autotool-solver
+version:             0.1.0.0
+github:              "herrmanno/autotool-solver"
+license:             BSD3
+author:              "Oliver Herrmann"
+maintainer:          "o.herrmann92@gmail.com"
+copyright:           "Oliver Herrmann 2021"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/herrmanno/autotool-solver#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- containers >= 0.5.6 && < 6
+
+library:
+  source-dirs: src
+
+executables:
+  autotool-solver-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - autotool-solver
+
+tests:
+  autotool-solver-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - autotool-solver
+    - hspec
