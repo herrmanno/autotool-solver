@@ -7,6 +7,7 @@ data Op2 =
     | Compose   -- ^ composition of two relations
     | Junction  -- ^ Junection (*) of two graphs
     deriving (Eq, Enum)
+
 data Op1 =
       Pow        -- ^ powersets of a set
     | Complement -- ^ complement of an graph

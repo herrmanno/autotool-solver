@@ -1,26 +1,28 @@
 module Autotool.Solver.SetsSpec (spec) where
 
+import Prelude hiding ((+), (-))
+
 import Test.Hspec
-import Autotool.Data.Set
-import Autotool.Data.Op
-import Autotool.Data.Tree
+import Autotool.Parser.NestedSet (parseIntSet)
+import Autotool.Data.SetOp ( (&), (+), (-), pow )
+import Autotool.Data.LazyTree ( Tree(Node), Op(Op0) )
 import Autotool.Solver.Sets (solve)
 
 spec = do
     describe "sets" $ do
         it "finds term w/ a target value from a set of sets and operations on them (1)" $
-            let a = Set "A" [ V 1, V 2 ]
-                b = Set "B" [ S [V 3] ]
-                r = S[ S[], S[V 1, V 2, S [V 3]], S[V 1, S[V 3]], S[V 2, S[V 3]], S[S[V 3]] ]
-                op2s = [Add, And, Subtr]
-                op1s = [Pow]
-                result = Node2 Subtr (Node1 Pow (Node2 Add (Node0 a) (Node0 b))) (Node2 Subtr (Node1 Pow (Node0 a)) (Node1 Pow (Node0 b)))
-            in solve op2s op1s [a,b] r 3 `shouldBe` result
+            let 
+                a = parseIntSet "{1, 2}"
+                b = parseIntSet "{{3}}"
+                r = parseIntSet "{{}, {1, 2, {3}}, {1, {3}}, {2, {3}}, {{3}}}"
+                ops = [(-), (+), (&), pow, Op0 a, Op0 b]
+                result = Node (-) [Node pow [Node (+) [Node (Op0 a) [], Node (Op0 b) []] ], Node (-) [Node pow [Node (Op0 a) []], Node pow [Node (Op0 b) []]] ]
+            in solve ops r `shouldBe` result
         it "finds term w/ a target value from a set of sets and operations on them (2)" $
-            let a = Set "A" [ S[ V 3, S[] ] ]
-                b = Set "B" [ V 3, S[ V 1, S[], S[ V 2 ] ] ]
-                r = S[ S[ S[ V 3, S[] ] ] ]
-                op2s = [Add, And, Subtr]
-                op1s = [Pow]
-                result = Node2 Subtr (Node1 Pow (Node0 a)) (Node1 Pow (Node0 b))
-            in solve op2s op1s [a,b] r 3 `shouldBe` result
+            let
+                a = parseIntSet "{{3, {}}}"
+                b = parseIntSet "{3, {1, {}, {2}}}"
+                r = parseIntSet "{{{3, {}}}}"
+                ops = [(-), (+), (&), pow, Op0 a, Op0 b]
+                result = Node (-) [ Node pow [Node (Op0 a) []], Node pow [Node (Op0 b) []] ]
+            in solve ops r `shouldBe` result

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 22ede20657c59b8dac01b91a2978e572dc7bfc2c9a535431dec16b1f5c27b366
+-- hash: 68eb0ea8db4f4934b21483dbda2709d48e5097b2f5184842aabac3248bb78783
 
 name:           autotool-solver
 version:        0.1.0.0
@@ -29,9 +29,15 @@ library
   exposed-modules:
       Autotool.Data.Graph
       Autotool.Data.LazyTree
+      Autotool.Data.NestedSet
       Autotool.Data.Op
+      Autotool.Data.Parallel.LazyTree
+      Autotool.Data.RelOp
       Autotool.Data.Set
+      Autotool.Data.SetOp
       Autotool.Data.Tree
+      Autotool.Parser.NestedSet
+      Autotool.Parser.Relation
       Autotool.Solver.Circle
       Autotool.Solver.ColorGraph
       Autotool.Solver.Graphs
@@ -46,6 +52,8 @@ library
   build-depends:
       base >=4.7 && <5
     , containers >=0.5.6 && <6
+    , parallel >=3.2.2.0 && <4
+    , parsec >=3.1.14.0 && <4
   default-language: Haskell2010
 
 executable autotool-solver-exe
@@ -54,17 +62,21 @@ executable autotool-solver-exe
       Paths_autotool_solver
   hs-source-dirs:
       app
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -O2 -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       autotool-solver
     , base >=4.7 && <5
     , containers >=0.5.6 && <6
+    , parallel >=3.2.2.0 && <4
+    , parsec >=3.1.14.0 && <4
   default-language: Haskell2010
 
 test-suite autotool-solver-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Autotool.Parser.NestedSetSpec
+      Autotool.Parser.RelationSpec
       Autotool.Solver.CircleSpec
       Autotool.Solver.ColorGraphSpec
       Autotool.Solver.HamiltonSpec
@@ -79,4 +91,6 @@ test-suite autotool-solver-test
     , base >=4.7 && <5
     , containers >=0.5.6 && <6
     , hspec
+    , parallel >=3.2.2.0 && <4
+    , parsec >=3.1.14.0 && <4
   default-language: Haskell2010

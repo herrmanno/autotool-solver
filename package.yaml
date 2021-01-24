@@ -22,6 +22,8 @@ description:         Please see the README on GitHub at <https://github.com/herr
 dependencies:
 - base >= 4.7 && < 5
 - containers >= 0.5.6 && < 6
+- parsec >= 3.1.14.0 && < 4
+- parallel >= 3.2.2.0 && < 4
 
 library:
   source-dirs: src
@@ -31,6 +33,7 @@ executables:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
+    - -O2
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
