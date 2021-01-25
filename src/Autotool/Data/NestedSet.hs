@@ -4,8 +4,10 @@ import Data.Set (Set, empty, fromList, toList, insert)
 import qualified Data.Set as S
 import Data.List (intercalate)
 
+-- | Recursive sum type of 'either a value or a set of Ts'
 data T a = V a | S (Set (T a)) deriving (Eq, Ord, Show)
 
+-- | A Data.Set of type (T a)
 type NSet a = Set (T a)
 
 -- for internal (e. g. parser) use
@@ -17,8 +19,8 @@ set = S
 
 unwrap :: T a -> NSet a
 unwrap (S s) = s
---
 
+ø :: Set a
 ø = empty
 
 øN :: (Ord a) => Int -> NSet a
@@ -39,6 +41,7 @@ a ++. s = insert (S $ fromList $ map V a) s
 (&.) :: (Ord a) => NSet a -> NSet a -> NSet a
 infixr 2 &.
 a &. s = insert (S a) s
+--
 
 powerSet :: (Ord a) => NSet a -> NSet a
 powerSet s = S.map S $ S.powerSet s

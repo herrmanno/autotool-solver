@@ -12,17 +12,17 @@ spec = do
     describe "sets" $ do
         it "finds term w/ a target value from a set of sets and operations on them (1)" $
             let 
-                a = parseIntSet "{1, 2}"
-                b = parseIntSet "{{3}}"
+                a = Op0 "a" $ parseIntSet "{1, 2}"
+                b = Op0 "b" $ parseIntSet "{{3}}"
                 r = parseIntSet "{{}, {1, 2, {3}}, {1, {3}}, {2, {3}}, {{3}}}"
-                ops = [(-), (+), (&), pow, Op0 a, Op0 b]
-                result = Node (-) [Node pow [Node (+) [Node (Op0 a) [], Node (Op0 b) []] ], Node (-) [Node pow [Node (Op0 a) []], Node pow [Node (Op0 b) []]] ]
+                ops = [(-), (+), (&), pow, a, b]
+                result = Node (-) [Node pow [Node (+) [Node a [], Node b []] ], Node (-) [Node pow [Node a []], Node pow [Node b []]] ]
             in solve ops r `shouldBe` result
         it "finds term w/ a target value from a set of sets and operations on them (2)" $
             let
-                a = parseIntSet "{{3, {}}}"
-                b = parseIntSet "{3, {1, {}, {2}}}"
+                a = Op0 "a" $ parseIntSet "{{3, {}}}"
+                b = Op0 "b" $ parseIntSet "{3, {1, {}, {2}}}"
                 r = parseIntSet "{{{3, {}}}}"
-                ops = [(-), (+), (&), pow, Op0 a, Op0 b]
-                result = Node (-) [ Node pow [Node (Op0 a) []], Node pow [Node (Op0 b) []] ]
+                ops = [(-), (+), (&), pow, a, b]
+                result = Node (-) [ Node pow [Node a []], Node pow [Node b []] ]
             in solve ops r `shouldBe` result

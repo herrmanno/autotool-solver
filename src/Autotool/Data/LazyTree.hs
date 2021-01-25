@@ -21,9 +21,9 @@ module Autotool.Data.LazyTree
 import Data.Tree (foldTree, levels, Tree(Node) )
 import Debug.Trace (traceShow, traceShowId)
 
-data Op a = Op0 a | Op1 String (a -> a) | Op2 String (a -> a -> a)
+data Op a = Op0 String a | Op1 String (a -> a) | Op2 String (a -> a -> a)
 
-isOp0 (Op0 _) = True
+isOp0 (Op0 _ _) = True
 isOp0 _ = False
 
 isOp1 (Op1 _ _) = True
@@ -33,20 +33,20 @@ isOp2 (Op2 _ _) = True
 isOp2 _ = False
 
 eval :: Op a -> [a] -> a
-eval (Op0 a) _ = a
+eval (Op0 _ a) _ = a
 eval (Op1 _ f) [a] = f a
 eval (Op2 _ f) [a,b] = f a b
 
 evalTree = foldTree eval
 
 instance (Eq a) => Eq (Op a) where
-    (Op0 a) == (Op0 b) = a == b
+    (Op0 _ a) == (Op0 _ b) = a == b
     (Op1 a _) == (Op1 b _) = a == b
     (Op2 a _) == (Op2 b _) = a == b
     _ == _ = False
 
 instance (Show a) => Show (Op a) where
-    show (Op0 a) = show a
+    show (Op0 s _) = s
     show (Op1 s _) = s
     show (Op2 s _) = s
 
@@ -135,6 +135,6 @@ showTree = showTreeFn show
 showTreeFn :: (Show a) => (a -> String) -> Tree (Op a) -> String
 showTreeFn showValue = foldTree f
     where
-        f (Op0 a) _ = showValue a
+        f (Op0 s _) _ = s
         f (Op1 s _) [a] =  s ++ "(" ++ a ++ ")"
         f (Op2 s _) [a,b] = "(" ++ a ++ ") " ++ s ++ " (" ++ b ++ ")"
