@@ -7,16 +7,16 @@ import Autotool.Data.LazyTree ( Op(Op1, Op2) )
 import Control.Arrow (Arrow(first))
 
 (+) :: (Ord a) => Op (Set (a,a))
-(+) = Op2 "+" union
+(+) = Op2 "+" True union
 
 (&) :: (Ord a) => Op (Set (a,a))
-(&) = Op2 "&" intersection
+(&) = Op2 "&" True intersection
 
 (-) :: (Ord a) => Op (Set (a,a))
-(-) = Op2 "-" difference
+(-) = Op2 "-" False difference
 
 (*) :: (Ord a) => Op (Set (a,a))
-(*) = Op2 "." compose
+(*) = Op2 "." False compose
 
 compose :: (Ord a) => Set (a,a) -> Set (a,a) -> Set (a,a)
 compose a b = foldl' f f0 a where

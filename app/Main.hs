@@ -1,32 +1,46 @@
-import Prelude hiding ((+), (-), (*))
+import System.Environment (getArgs)
+import App (app, help)
 
-import Autotool.Data.RelOp ( (&), (+), (-), (*) )
-import Autotool.Data.LazyTree (showTreeFn, showTree,  Tree(Node), Op(Op0) )
-import Autotool.Solver.Relations (solve)
-import Autotool.Parser.Relation (parseIntRelation)
-import Autotool.Data.Parallel.LazyTree (treesP)
 main = do
-        let
-            r = Op0 "r" $ parseIntRelation "{(1,1),(1,2),(2,1)}"
-                -- s = Set "S" [ V(1 , 3), V(2 , 1), V(2 , 2) ]
-            s = Op0 "s" $ parseIntRelation "{(1,3),(2,1),(2,2)}"
-                -- t = S[ V(1 , 2) , V(2 , 3) ]
-            t = parseIntRelation "{(1,3),(2,3)}"
-            ops = [(+), (&), (-), (*), r, s]
-                -- result = Node2 Subtr (Node2 Compose (Node0 r) (Node2 Subtr (Node0 s) (Node0 r))) (Node0 s)
-            result = Node (-) [
-                Node (*) [
-                    Node r [],
-                    Node (-) [ Node s [], Node r [] ]
-                ],
-                Node s []
-                ]
-            ts = treesP ops
-            st = let f a
-                        | a == r = "R"
-                        | a == s = "S"
-                        | otherwise = show a
-                in showTreeFn f
-        -- mapM_ (putStrLn . st) ts
-        putStrLn $ showTree $ solve ops t
+    args <- getArgs
+    go args >>= putStrLn
+    where
+        go [command,filename] = do
+            input <- readFile filename
+            return $ app command input
+        go _ = return help
+
+-- import Prelude hiding ((+), (-), (*))
+-- import Autotool.Data.SetOp ( (&), (+), (-), pow )
+-- import Autotool.Data.LazyTree (treesLevelCount, termsLength, trees, evalTree, showTreeFn, showTree,  Tree(Node), Op(Op0), findTree)
+-- import Autotool.Solver.Sets (solve)
+-- import Autotool.Parser.NestedSet (parseIntSet)
+-- import Autotool.Data.Parallel.LazyTree (treesP)
+-- import Autotool.Data.NestedSet (toStr)
+
+-- main = do
+--         let
+--             a = Op0 "A" $ parseIntSet "{{}, {{}}}"
+--             b = Op0 "B" $ parseIntSet "{1, {1}, {2, {}}}"
+--             t = parseIntSet "{{}, {{}, {{}}}, {{{}}}}"
+--             ops = [(+), (-), (&), pow, a, b]
+--             result =
+--                 Node (-) [
+--                     Node pow [ Node a [] ],
+--                     Node (-) [
+--                         Node a [],
+--                         Node pow [
+--                             Node (&) [
+--                                 Node a [],
+--                                 Node b []
+--                             ]
+--                         ]
+--                     ]
+--                 ]
+--             ts = trees ops
+--         -- mapM_ (putStrLn . showTree) (take 50000 ts)
+--         -- print $ let xs = [0..5] in zip xs $  map (treesLevelCount [2,1,3]) xs
+--         -- print $ let xs = [600..700] in zip xs $  map (termsLength [2,1,3]) xs
+--         -- print $ toStr $ evalTree result
+--         putStrLn $ showTree $ solve ops t
 

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 68eb0ea8db4f4934b21483dbda2709d48e5097b2f5184842aabac3248bb78783
+-- hash: fd7b13f51c976974ba5a29dce4dd884552e150d911ddea921fd1b23c5f9a8fe3
 
 name:           autotool-solver
 version:        0.1.0.0
@@ -59,6 +59,9 @@ library
 executable autotool-solver-exe
   main-is: Main.hs
   other-modules:
+      App
+      Tasks.Relations
+      Tasks.Sets
       Paths_autotool_solver
   hs-source-dirs:
       app

@@ -7,13 +7,13 @@ import Autotool.Data.NestedSet (NSet, powerSet)
 import Autotool.Data.LazyTree ( Op(Op1, Op2) )
 
 (+) :: (Ord a) => Op (NSet a)
-(+) = Op2 "+" union
+(+) = Op2 "+" True union
 
 (&) :: (Ord a) => Op (NSet a)
-(&) = Op2 "&" intersection
+(&) = Op2 "&" True intersection
 
 (-) :: (Ord a) => Op (NSet a)
-(-) = Op2 "-" difference
+(-) = Op2 "-" False difference
 
 pow :: (Ord a) => Op (NSet a)
 pow = Op1 "pow" powerSet
