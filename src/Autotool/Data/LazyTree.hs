@@ -9,7 +9,7 @@ module Autotool.Data.LazyTree
     , findTree
     , findTreeLim
     , showTree
-    , showTreeFn
+    , showFnTree
     , evalTree
     , eval
     , trees
@@ -21,7 +21,7 @@ module Autotool.Data.LazyTree
 
 import Data.Tree (foldTree, levels, Tree(Node) )
 import Debug.Trace (traceShow, traceShowId)
-import Data.List (sort, subsequences, find)
+import Data.List (sort, subsequences, find, notElem, )
 
 data Op a = Op0 String a | Op1 String (a -> a) | Op2 String Bool (a -> a -> a)
 
@@ -204,13 +204,21 @@ size :: Tree (Op a) -> Int
 size (Node _ xs) = 1 + sum (map size xs)
 
 showTree :: (Show a) => Tree (Op a) -> String
-showTree = showTreeFn show
-
-showTreeFn :: (Show a) => (a -> String) -> Tree (Op a) -> String
-showTreeFn showValue = foldTree f
+showTree = foldTree f
     where
         f (Op0 s _) _ = s
         f (Op1 s _) [a] =  s ++ "(" ++ a ++ ")"
         f (Op2 s _ _) [a,b] = brOp a ++ " " ++ s ++ " " ++ brOp b
-        brOp [c] = [c]
-        brOp c = "(" ++ c ++ ")"
+            where
+                brOp [c] = [c]
+                brOp c = "(" ++ c ++ ")"
+
+showFnTree :: (Show a) => Tree (Op a) -> String
+showFnTree = foldTree f
+    where
+        f (Op0 s _) _ = s ++ "()"
+        f (Op1 s _) [a] =  s ++ "(" ++ a ++ ")"
+        f (Op2 s _ _) [a,b] = s ++ "(" ++ a ++ "," ++ b ++ ")"
+            where
+                brOp [c] = [c]
+                brOp c = "(" ++ c ++ ")"

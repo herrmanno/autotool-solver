@@ -1,0 +1,33 @@
+#STRUCTURES
+
+    A = Struktur
+            { universum = mkSet
+                              [ 1, 2]
+            , predicates = listToFM    [ ]
+            , functions = listToFM
+                              [ ( h, {(1 , 1) , (2 , 2)})
+                              , ( f
+                                , {(1 , 1 , 2) , (1 , 2 , 1) ,
+                                  (2 , 1 , 1) , (2 , 2 , 1)}
+                                )
+                              , ( g, {(1 , 1) , (2 , 2)})
+                              , ( a, {(1)})
+                              , ( b, {(2)})
+                              ] 
+            }
+
+    B = Struktur
+            { universum = mkSet
+                              [ 1, 2]
+            , predicates = listToFM    [ ]
+            , functions = listToFM
+                              [ ( h, {(1 , 1) , (2 , 2)})
+                              , ( f
+                                , {(1 , 1 , 2) , (1 , 2 , 1) ,
+                                  (2 , 1 , 2) , (2 , 2 , 1)}
+                                )
+                              , ( g, {(1 , 1) , (2 , 2)})
+                              , ( a, {(1)})
+                              , ( b, {(2)})
+                              ] 
+            }

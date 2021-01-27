@@ -15,4 +15,4 @@ solve ops t = case findTreeLim lim ops t of
     (Just result) -> result
     _ -> error $ "No matching tree found within first " ++ show lim ++ " candidates"
     where
-        lim = 300000
+        lim = 500000
