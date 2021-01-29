@@ -8,13 +8,13 @@ module Autotool.Data.LazyTree
     , isOp2
     , findTree
     , findTreeLim
+    , searchTree
+    , searchTreeLim
     , showTree
     , showFnTree
     , evalTree
     , eval
     , trees
-    , termsLength
-    , treesLevelCount
     , depth
     , size
     ) where
@@ -72,7 +72,13 @@ instance Show (Op a) where
 findTree :: (Eq a) => [Op a]                -- ^ the operations defining the tree type
                    -> a                     -- ^ the target value to match against
                    -> Tree (Op a)           -- ^ a tree that evaluates to `a` under `f`
-findTree ops t = head $ filter ((==t) . evalTree) factory
+findTree ops t = searchTree ops (==t)
+
+-- | Find a tree that satifies a given predicate when evaluated
+searchTree :: (Eq a) => [Op a]              -- ^ the operations defining the tree type
+                   -> (a -> Bool)             -- ^ the predicate the trees evaluation must satisfy
+                   -> Tree (Op a)           -- ^ a tree that evaluates to `a` under `f`
+searchTree ops p = head $ filter (p . evalTree) factory
     where
         factory = trees ops
 
@@ -84,10 +90,17 @@ findTreeLim :: (Eq a) =>
     -> [Op a]                      -- ^ the operations defining the tree type
     -> a                        -- ^ the target value to match against
     -> Maybe (Tree (Op a))      -- ^ a tree that evaluates to `a` under `f`
-findTreeLim lim ops t = find ((==t) . evalTree) (take lim factory)
+findTreeLim lim ops t = searchTreeLim lim ops (==t)
+
+-- see `Autotool.Data.LazyTree.searchTree`
+searchTreeLim :: (Eq a) =>
+    Int                         -- ^ limit of trees to create
+    -> [Op a]                   -- ^ the operations defining the tree type
+    -> (a -> Bool)              -- ^ the target value to match against
+    -> Maybe (Tree (Op a))      -- ^ a tree that evaluates to `a` under `f`
+searchTreeLim lim ops p = find (p . evalTree) (take lim factory)
     where
         factory = trees ops
-
 
 {- | Create an (infinite) list of all possible trees under a given set of operators and constants
     
@@ -101,7 +114,7 @@ trees ::  forall a. [Op a]         -- ^ the given operators
       -> [Tree (Op a)]   -- ^ the list of trees
 trees ops = map (`Node` []) consts ++ go [] [] (length consts) 0 0
     where
-        ts = (!!) (trees ops) 
+        ts = (!!) (trees ops)
         -- | constructs trees lazy
         -- It works be cycling repeatedly through individual _runs_, where a run
         -- consists of multiple operator runs (one for each given non-const operator).
@@ -140,62 +153,6 @@ combinations xs = do
     a <- xs
     b <- xs
     return [a, b]
-
--- |Returns the number of unique trees w/ given operators and constants of a specific depth
--- FIXME: no longer needed
--- >>> treesLevelCount [2, 3, 4] 3
--- 16038022
--- 
--- returns the number of unique trees of depth 3
--- build from a set of
---  - 2 constants
---  - 3 1-arity functions
---  - 4 2-arity functions
-treesLevelCount :: [Op a] -> Int -> Int
-treesLevelCount ops 0 = length (filter isOp0 ops)
-treesLevelCount ops d =
-    let n_1 = sum $ map (treesLevelCount ops) [0..d - 1]
-        n_2 = sum $ map (treesLevelCount ops) [0..d - 2]
-        ar0Params = n_1 - n_2
-        ar1Trees = ar0Params * length (filter isOp1 ops)
-        ar2ComTrees = (length (filter isCommutative ops) *  commutativePairsCount n_1)
-        ar2NonComTrees = length (filter isNonCommutative ops) * n_1^2
-    in sum [ar1Trees, ar2ComTrees, ar2NonComTrees]
-
--- |Returns the number of unique terms for a tree at position *n* in a lazy tree list
--- FIXME: no longer needed
---
--- example:
--- 
--- >>> termsLength [2,1,1] 10
--- 8
---
--- returns the number of terms for a depth 3 (from n == 10) tree build upon
--- - 2 constants
--- - 1 1-arity function
--- - 1 2-arity function
-termsLength :: [Op a] -> Int -> Int
-termsLength ops n
-    | n < consts = consts
-    | otherwise = last $ takeWhile (<=n) $ scanl1 (+) $ map (treesLevelCount ops) [0..]
-    where consts = length $ filter isOp0 ops
-
-{-| return the length of commutativePairs from a list of size `n`
--- FIXME: no longer needed
-    see 'commutativePairs'
- -}
-commutativePairsCount :: Int -> Int
-commutativePairsCount n = n + (n * (n - 1) `div` 2)
-
-{-| Creates all pairs of list w/ restriction: ∀x,y: x ≠ y → (x,y) ∈ L ⊻ (y,x) ∈ L
--- FIXME: no longer needed
-    >>> commutativePairs [a,b,c]
-    [(a,a),(b,b),(c,c),(a,b),(a,c),(b,c)]
- -}
-commutativePairs :: [a] -> [(a,a)]
-commutativePairs xs = selfs ++ others where
-    selfs = zip xs xs
-    others = map (\[a,b] -> (a,b)) $ filter ((==2) . length) $ subsequences xs
 
 depth :: Tree (Op a) -> Int
 depth = length . levels
