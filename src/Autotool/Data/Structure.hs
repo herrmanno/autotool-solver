@@ -1,5 +1,6 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 
+-- FIXME: split into DAO- and Data type
 module Autotool.Data.Structure where
 
 import qualified Text.Read as T

@@ -1,0 +1,60 @@
+GraphsDescription {
+    target = Graph
+        { knoten = mkSet
+                       [ 0
+                       , 1
+                       , 2
+                       , 3
+                       , 4
+                       , 5
+                       , 6
+                       , 7
+                       , 8
+                       , 9
+                       , 10
+                       , 11
+                       , 12
+                       , 13
+                       , 14
+                       , 15
+                       ]
+        , kanten = mkSet
+                       [ kante 0 2
+                       , kante 0 3
+                       , kante 0 4
+                       , kante 0 5
+                       , kante 0 6
+                       , kante 1 3
+                       , kante 1 4
+                       , kante 1 5
+                       , kante 1 6
+                       , kante 2 3
+                       , kante 2 4
+                       , kante 2 5
+                       , kante 2 6
+                       , kante 3 4
+                       , kante 3 6
+                       , kante 4 5
+                       , kante 5 6
+                       , kante 7 8
+                       , kante 8 9
+                       , kante 9 10
+                       , kante 11 12
+                       , kante 11 13
+                       , kante 12 13
+                       ] 
+        },
+    graphs = [ K1
+                    , K2
+                    , K3
+                    , K4
+                    , K5
+                    , P3
+                    , P4
+                    , P5
+                    , C3
+                    , C4
+                    , C5
+                    ],
+    ops = [co,+,*]
+}

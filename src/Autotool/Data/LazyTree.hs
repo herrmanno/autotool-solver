@@ -110,8 +110,8 @@ searchTreeLim lim ops p = find (p . evalTree) (take lim factory)
     An operator run consists of building _n_ trees w/ one operator as tree root where
     the number of trees to build in this run is determined at the start of the run.
  -}
-trees ::  forall a. [Op a]         -- ^ the given operators
-      -> [Tree (Op a)]   -- ^ the list of trees
+trees :: forall a. [Op a]       -- ^ the given operators
+      -> [Tree (Op a)]          -- ^ the list of trees
 trees ops = map (`Node` []) consts ++ go [] [] (length consts) 0 0
     where
         ts = (!!) (trees ops)

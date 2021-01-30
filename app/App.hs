@@ -1,8 +1,9 @@
 module App ( app, help ) where
 
-import Tasks.Sets as Set 
-import Tasks.Relations as Relation
-import Tasks.Structures as Structures
+import Tasks.Sets as Set ( runTask ) 
+import Tasks.Relations as Relation ( runTask )
+import Tasks.Structures as Structures ( runTask )
+import Tasks.Graphs as Graphs ( runTask )
 
 app :: String -- ^ task type
     -> String -- ^ task description
@@ -10,6 +11,7 @@ app :: String -- ^ task type
 app "set" d = Set.runTask d
 app "rel" d = Relation.runTask d
 app "struct" d = Structures.runTask d
+app "graph" d = Graphs.runTask d
 app s _ = unlines $ ("Undefined task type '" ++ s ++ "'. Supported task types are:") : taskDescriptions
 
 help = unlines $ "USAGE: <task> <task description file>" : taskDescriptions
