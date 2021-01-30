@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 885c387bd47d7657a94641a8372dac1e19fb6c0d3d458baf0f43106c82aab967
+-- hash: 448eaaf4b1bb967449e1fd1c3ae39842a748148dea3cdb8afc77a51918956a9f
 
 name:           autotool-solver
 version:        0.1.0.0
@@ -65,6 +65,7 @@ executable autotool-solver-exe
   main-is: Main.hs
   other-modules:
       App
+      Tasks.Circle
       Tasks.Graphs
       Tasks.Relations
       Tasks.Sets
@@ -85,6 +86,8 @@ test-suite autotool-solver-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Autotool.DAO.GraphSpec
+      Autotool.DAO.SetSpec
       Autotool.Parser.NestedSetSpec
       Autotool.Parser.RelationSpec
       Autotool.Solver.CircleSpec

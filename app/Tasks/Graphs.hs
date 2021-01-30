@@ -1,7 +1,5 @@
 module Tasks.Graphs (runTask) where
 
-import qualified Text.ParserCombinators.ReadP as P
-import Text.ParserCombinators.ReadP (ReadP)
 import Autotool.Data.LazyTree (showTree, Op)
 import Autotool.DAO
 import qualified Autotool.DAO.Graph as DAO ( Graph, GraphConst, GraphOp )

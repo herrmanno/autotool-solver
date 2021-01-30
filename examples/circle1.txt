@@ -1,0 +1,40 @@
+ CircleDescription {
+    graph = Graph
+        { knoten = mkSet
+                       [ 1
+                       , 2
+                       , 3
+                       , 4
+                       , 5
+                       , 6
+                       , 7
+                       , 8
+                       , 9
+                       , 10
+                       ]
+        , kanten = mkSet
+                       [ kante 1 3
+                       , kante 1 5
+                       , kante 1 6
+                       , kante 1 7
+                       , kante 1 8
+                       , kante 1 9
+                       , kante 2 3
+                       , kante 2 4
+                       , kante 2 6
+                       , kante 2 8
+                       , kante 2 10
+                       , kante 3 4
+                       , kante 3 5
+                       , kante 3 6
+                       , kante 4 5
+                       , kante 4 8
+                       , kante 4 9
+                       , kante 5 7
+                       , kante 5 8
+                       , kante 5 10
+                       , kante 6 9
+                       ] 
+        },
+    length = 5
+}
