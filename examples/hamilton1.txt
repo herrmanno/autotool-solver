@@ -1,0 +1,38 @@
+HamiltonDescription {
+    graph = Graph
+        { knoten = mkSet
+                       [ 1
+                       , 2
+                       , 3
+                       , 4
+                       , 5
+                       , 6
+                       , 7
+                       , 8
+                       , 9
+                       , 10
+                       ]
+        , kanten = mkSet
+                       [ kante 1 4
+                       , kante 1 7
+                       , kante 1 9
+                       , kante 2 3
+                       , kante 2 5
+                       , kante 2 6
+                       , kante 2 7
+                       , kante 2 8
+                       , kante 2 10
+                       , kante 3 4
+                       , kante 3 6
+                       , kante 4 6
+                       , kante 4 8
+                       , kante 4 9
+                       , kante 4 10
+                       , kante 5 6
+                       , kante 5 7
+                       , kante 7 9
+                       , kante 8 10
+                       , kante 9 10
+                       ] 
+        }
+}
