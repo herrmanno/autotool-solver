@@ -1,6 +1,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
+-- FIXME: remove! no longer needed!
 module Autotool.Parser.Graph where
 
 import qualified Text.Read as T

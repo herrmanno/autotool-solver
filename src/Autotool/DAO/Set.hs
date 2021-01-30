@@ -1,7 +1,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-module Autotool.DAO.Set (Set, mkSet) where
+module Autotool.DAO.Set (Set, mkSet, mkBrSet) where
 
 import qualified Data.Set as S
 import qualified Text.ParserCombinators.ReadP as P
@@ -31,6 +31,10 @@ instance (DAO (S.Set a)) (Set a) where
     toValue (Set s) = s
     toValue (BrSet s) = s
 
-
+-- |Only for internal usage
 mkSet :: (Ord a) => [a] -> Set a
 mkSet = Set . S.fromList
+
+-- |Only for internal usage
+mkBrSet :: (Ord a) => [a] -> Set a
+mkBrSet = BrSet . S.fromList
