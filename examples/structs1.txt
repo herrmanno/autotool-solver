@@ -1,6 +1,6 @@
-#STRUCTURES
-
-A = Struktur
+StructureDescription {
+  structs = [
+    Struktur
             { universum = mkSet
                               [ 1, 2, 3, 4]
             , predicates = listToFM    [ ]
@@ -20,9 +20,8 @@ A = Struktur
                                 )
                               , ( c, {(2)})
                               ] 
-            }
-
-B = Struktur
+            },
+    Struktur
             { universum = mkSet
                               [ 1, 2, 3, 4]
             , predicates = listToFM    [ ]
@@ -43,3 +42,5 @@ B = Struktur
                               , ( c, {(2)})
                               ] 
             }
+  ]
+}
