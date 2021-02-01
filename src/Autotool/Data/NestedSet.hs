@@ -1,4 +1,22 @@
-module Autotool.Data.NestedSet (T, NSet, value, set, unwrap, toNSet, ø, (+.), (++.), (&.), powerSet, toStr, toStrFn) where
+module Autotool.Data.NestedSet
+    ( T
+    , NSet
+    , value
+    , set
+    , isValue
+    , isSet
+    , unwrapValue
+    , unwrapSet
+    , unwrap
+    , toNSet
+    , ø
+    , (+.)
+    , (++.)
+    , (&.)
+    , powerSet
+    , toStr
+    , toStrFn
+) where
 
 import Data.Set (Set, empty, fromList, toList, insert)
 import qualified Data.Set as S
@@ -16,6 +34,20 @@ value = V
 
 set :: Set (T a) -> T a
 set = S
+
+isValue :: T a -> Bool
+isValue (V a)  = True
+isValue _ = False
+
+isSet :: T a -> Bool
+isSet (S a)  = True
+isSet _ = False
+
+unwrapValue :: T a -> a
+unwrapValue (V a) = a
+
+unwrapSet :: T a -> S.Set (T a)
+unwrapSet (S a) = a
 
 unwrap :: T a -> NSet a
 unwrap (S s) = s
