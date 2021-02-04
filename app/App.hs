@@ -7,6 +7,7 @@ import Tasks.Graphs as Graphs ( runTask )
 import Tasks.Circle as Circle ( runTask )
 import Tasks.Hamilton as Hamilton ( runTask )
 import Tasks.Bipartit as Bipartit ( runTask )
+import Tasks.Isomorphism as Isomorphism ( runTask )
 
 app :: String -- ^ task type
     -> String -- ^ task description
@@ -18,6 +19,7 @@ app "graph" d = Graphs.runTask d
 app "circle" d = Circle.runTask d
 app "hamilton" d = Hamilton.runTask d
 app "bipartit" d = Bipartit.runTask d
+app "iso" d = Isomorphism.runTask d
 app s _ = unlines $ ("Undefined task type '" ++ s ++ "'. Supported task types are:") : taskDescriptions
 
 help = unlines $ "USAGE: <task> <task description file>" : taskDescriptions
@@ -30,4 +32,5 @@ taskDescriptions =
     , "  - circle :: finds a circle of given length in a graph"
     , "  - hamilton :: finds a hamilton path in a graph"
     , "  - bipartit :: finds a set of vertices that split a graph into two bipartit subgraphs"
+    , "  - iso :: finds an isomorphism from one graph to another"
     ]

@@ -177,7 +177,7 @@ runIsomorphism :: (Ord a, Ord b) => M.Map a b -> Graph a -> Graph b
 runIsomorphism m = rename (m M.!)
 
 findIsomorphism :: (Ord a, Ord b) => Graph a -> Graph b -> Maybe (Isomorphism a b)
-findIsomorphism g h = find ((==h) . (`runIsomorphism` g)) isomorphisms
+findIsomorphism g h = find (similiar h . (`runIsomorphism` g)) isomorphisms
     where
         vs = S.toList (vertices g)
         vs' = S.toList (vertices h)

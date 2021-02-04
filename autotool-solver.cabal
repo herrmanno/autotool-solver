@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: da978679ce253618a184b5015f14eb541d3e02e985abb18d6fca7588bd80be0a
+-- hash: 2f36bd037402cab0d1fe0ecbb7f678cdd92ae807bd2558e4ee80c9f8b82c4ab9
 
 name:           autotool-solver
 version:        0.1.0.0
@@ -50,6 +50,7 @@ library
       Autotool.Solver.ColorGraph
       Autotool.Solver.Graphs
       Autotool.Solver.Hamilton
+      Autotool.Solver.Isomorphism
       Autotool.Solver.Relations
       Autotool.Solver.Sets
       Autotool.Solver.Structures
@@ -73,6 +74,7 @@ executable autotool-solver-exe
       Tasks.Circle
       Tasks.Graphs
       Tasks.Hamilton
+      Tasks.Isomorphism
       Tasks.Relations
       Tasks.Sets
       Tasks.Structures
@@ -101,6 +103,7 @@ test-suite autotool-solver-test
       Autotool.Solver.ColorGraphSpec
       Autotool.Solver.GraphsSpec
       Autotool.Solver.HamiltonSpec
+      Autotool.Solver.IsomorphismSpec
       Autotool.Solver.RelationsSpec
       Autotool.Solver.SetsSpec
       Paths_autotool_solver
