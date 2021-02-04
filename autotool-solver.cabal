@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c0ff17b9e9e48a70a8a96c8d29cf50590874ca74dbbe787af591bc7098d7cfc0
+-- hash: fc5c232dce3c3061c6fb0e8bac494c7c1e4f06594c4aa933adb52c3fbc475449
 
 name:           autotool-solver
 version:        0.1.0.0
@@ -28,8 +28,14 @@ source-repository head
 library
   exposed-modules:
       Autotool.DAO
+      Autotool.DAO.Function
       Autotool.DAO.Graph
+      Autotool.DAO.Identifier
+      Autotool.DAO.Map
+      Autotool.DAO.NestedSet
+      Autotool.DAO.Relation
       Autotool.DAO.Set
+      Autotool.DAO.Structure
       Autotool.Data.Graph
       Autotool.Data.GraphOp
       Autotool.Data.LazyTree
@@ -37,9 +43,6 @@ library
       Autotool.Data.Parallel.LazyTree
       Autotool.Data.RelOp
       Autotool.Data.SetOp
-      Autotool.Data.Structure
-      Autotool.Parser.Graph
-      Autotool.Parser.NestedSet
       Autotool.Parser.Relation
       Autotool.Readable
       Autotool.Solver.Circle
@@ -88,8 +91,8 @@ test-suite autotool-solver-test
   main-is: Spec.hs
   other-modules:
       Autotool.DAO.GraphSpec
+      Autotool.DAO.NestedSetSpec
       Autotool.DAO.SetSpec
-      Autotool.Parser.NestedSetSpec
       Autotool.Parser.RelationSpec
       Autotool.Solver.CircleSpec
       Autotool.Solver.ColorGraphSpec
