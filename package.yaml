@@ -30,7 +30,7 @@ library:
   source-dirs: src
 
 executables:
-  autotool-solver-exe:
+  autotool-helper:
     main:                Main.hs
     source-dirs:         app
     ghc-options:

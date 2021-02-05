@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e79771966e2c5f4aae2d92601e19d5e26cc9433c4e91a3bcf3eac331c0a4a346
+-- hash: 59306e83089c1fd6d706381c597cf10f297aacdd6bdc444958ceeb40c729b151
 
 name:           autotool-solver
 version:        0.1.0.0
@@ -67,7 +67,7 @@ library
     , parsec >=3.1.14.0 && <4
   default-language: Haskell2010
 
-executable autotool-solver-exe
+executable autotool-helper
   main-is: Main.hs
   other-modules:
       App

@@ -26,12 +26,12 @@ help :: String
 help = unlines $ "USAGE: <task> <task description file>" : taskDescriptions
 
 taskDescriptions =
-    [ "  - set :: finds an expression matching a target value, given operators and constants"
-    , "  - rel :: finds an expression matching a target value, given operators and constants"
-    , "  - struct :: finds an expression with different value (semantic) in two structs"
-    , "  - graph :: finds an expression matching a target value, given operators and constants"
-    , "  - circle :: finds a circle of given length in a graph"
+    [ "  - set      :: finds an expression matching a target value, given operators and constants"
+    , "  - rel      :: finds an expression matching a target value, given operators and constants"
+    , "  - struct   :: finds an expression with different value (semantic) in two structs"
+    , "  - graph    :: finds an expression matching a target value, given operators and constants"
+    , "  - circle   :: finds a circle of given length in a graph"
     , "  - hamilton :: finds a hamilton path in a graph"
     , "  - bipartit :: finds a set of vertices that split a graph into two bipartit subgraphs"
-    , "  - iso :: finds an isomorphism from one graph to another"
+    , "  - iso      :: finds an isomorphism from one graph to another"
     ]
