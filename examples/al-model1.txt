@@ -1,0 +1,3 @@
+StatementModelDescription {
+    statement = (  p ||   r || ! s) && (  p ||   s || ! q) && (  q ||   s || ! p) && (  q || ! p || ! r) && (  q || ! r || ! s) && (  r ||   s || ! q)
+}

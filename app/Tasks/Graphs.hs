@@ -12,8 +12,8 @@ runTask s = showTree $ solve (consts ++ operators) t
     where
         desc = read s :: GraphsDescription
         t = toValue $ target desc :: G.Graph Int
-        operators = map toValue $ ops desc :: [Op (G.Graph Int)]
-        consts = map toValue $ graphs desc :: [Op (G.Graph Int)]
+        operators = map toValue $ ops desc :: [Op () (G.Graph Int)]
+        consts = map toValue $ graphs desc :: [Op () (G.Graph Int)]
 
 data GraphsDescription = GraphsDescription
     { target :: DAO.Graph Int

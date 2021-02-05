@@ -4,7 +4,15 @@
 module Autotool.Readable where
 
 import Control.Applicative (Alternative((<|>)))
-import Text.ParserCombinators.ReadP ( ReadP, readP_to_S, char, skipSpaces,skipSpaces, between, munch1, sepBy )
+import Text.ParserCombinators.ReadP
+    ( ReadP
+    , readP_to_S
+    , char
+    , string
+    , skipSpaces
+    , between
+    , munch1
+    , sepBy )
 import Data.Char (isDigit)
 
 class Readable a where
@@ -16,6 +24,12 @@ class Readable a where
 
 spaces :: ReadP ()
 spaces = skipSpaces
+
+spaced :: ReadP a -> ReadP a
+spaced r = spaces *> r <* spaces
+
+spacedString :: String -> ReadP String
+spacedString str = spaced $ string str
 
 comma :: ReadP ()
 comma = char ',' >> spaces

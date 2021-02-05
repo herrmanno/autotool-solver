@@ -1,7 +1,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-module Autotool.DAO.Map (Map, listToFM) where
+module Autotool.DAO.Map (Map, listToFM, mapToFM) where
 
 import qualified Data.Map as M
 import Data.List (intercalate)
@@ -27,3 +27,6 @@ instance (DAO (M.Map a k)) (Map a k) where
 
 listToFM :: (Ord a) => [(a,b)] -> Map a b
 listToFM = Map . M.fromList
+
+mapToFM :: (Ord a) => M.Map a b -> Map a b
+mapToFM = Map

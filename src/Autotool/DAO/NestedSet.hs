@@ -65,7 +65,7 @@ instance Readable (SetOp a) where
             readDiff = (spaces >> P.char '-' >> spaces) $> OpDiff
             readPowerset = (spaces >> P.string "pow" >> spaces) $>  OpPowerset
 
-instance (Num a, Ord a) => (DAO (Op (NSet a))) (SetOp a) where
+instance (Num a, Ord a) => (DAO (Op c (NSet a))) (SetOp a) where
     toValue OpSum = (+)
     toValue OpUnion = (&)
     toValue OpDiff = (-)

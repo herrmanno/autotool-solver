@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 59306e83089c1fd6d706381c597cf10f297aacdd6bdc444958ceeb40c729b151
+-- hash: 30bfa5d5130fab8429438c4d8ff03a941590187a50d92ca693e08ce6e3dc7261
 
 name:           autotool-solver
 version:        0.1.0.0
@@ -35,6 +35,7 @@ library
       Autotool.DAO.NestedSet
       Autotool.DAO.Relation
       Autotool.DAO.Set
+      Autotool.DAO.Statement
       Autotool.DAO.Structure
       Autotool.Data.Graph
       Autotool.Data.GraphOp
@@ -43,7 +44,7 @@ library
       Autotool.Data.Parallel.LazyTree
       Autotool.Data.RelOp
       Autotool.Data.SetOp
-      Autotool.Parser.Relation
+      Autotool.Data.StatementLogic
       Autotool.Readable
       Autotool.Solver.Bipartit
       Autotool.Solver.Circle
@@ -53,6 +54,7 @@ library
       Autotool.Solver.Isomorphism
       Autotool.Solver.Relations
       Autotool.Solver.Sets
+      Autotool.Solver.StatementModel
       Autotool.Solver.Structures
       Autotool.Util.Hash
   other-modules:
@@ -78,6 +80,7 @@ executable autotool-helper
       Tasks.Isomorphism
       Tasks.Relations
       Tasks.Sets
+      Tasks.StatementModel
       Tasks.Structures
       Paths_autotool_solver
   hs-source-dirs:
@@ -99,7 +102,6 @@ test-suite autotool-solver-test
       Autotool.DAO.GraphSpec
       Autotool.DAO.NestedSetSpec
       Autotool.DAO.SetSpec
-      Autotool.Parser.RelationSpec
       Autotool.Solver.BipartitSpec
       Autotool.Solver.CircleSpec
       Autotool.Solver.ColorGraphSpec
@@ -108,6 +110,7 @@ test-suite autotool-solver-test
       Autotool.Solver.IsomorphismSpec
       Autotool.Solver.RelationsSpec
       Autotool.Solver.SetsSpec
+      Autotool.Solver.StatementModelSpec
       Paths_autotool_solver
   hs-source-dirs:
       test

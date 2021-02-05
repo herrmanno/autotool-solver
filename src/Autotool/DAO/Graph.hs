@@ -19,7 +19,7 @@ import Autotool.DAO.Set (Set)
 import Autotool.Readable (spaces, Readable(..))
 import qualified Autotool.Data.Graph as G
 import Autotool.Data.GraphOp ((+),(*),co)
-import Autotool.Data.LazyTree (Op(Op0))
+import Autotool.Data.LazyTree (Op, mkOp0)
 
 {- GRAPH -}
 
@@ -80,11 +80,11 @@ instance (DAO (G.Graph Int)) GraphConst where
     toValue (GraphConstP n) = G.mkP n
     toValue (GraphConstC n) = G.mkC n
 
-instance (DAO (Op (G.Graph Int))) GraphConst where
-    toValue g@(GraphConstI n) = Op0 ('I':show n) (toValue g)
-    toValue g@(GraphConstK n) = Op0 ('K':show n) (toValue g)
-    toValue g@(GraphConstP n) = Op0 ('P':show n) (toValue g)
-    toValue g@(GraphConstC n) = Op0 ('C':show n) (toValue g)
+instance (DAO (Op c (G.Graph Int))) GraphConst where
+    toValue g@(GraphConstI n) = mkOp0 ('I':show n) (toValue g)
+    toValue g@(GraphConstK n) = mkOp0 ('K':show n) (toValue g)
+    toValue g@(GraphConstP n) = mkOp0 ('P':show n) (toValue g)
+    toValue g@(GraphConstC n) = mkOp0 ('C':show n) (toValue g)
 
 
 
@@ -107,7 +107,7 @@ instance Readable (GraphOp a) where
             readJunction = (spaces >> P.char '*' >> spaces) $> OpJunction
             readComplement = (spaces >> P.string "co" >> spaces) $> OpComplement
 
-instance (Num a, Ord a) => (DAO (Op (G.Graph a))) (GraphOp a) where
+instance (Num a, Ord a) => (DAO (Op c (G.Graph a))) (GraphOp a) where
     toValue OpSum = (+)
     toValue OpJunction = (*)
     toValue OpComplement = co

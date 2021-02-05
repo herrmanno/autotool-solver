@@ -8,6 +8,7 @@ import Tasks.Circle as Circle ( runTask )
 import Tasks.Hamilton as Hamilton ( runTask )
 import Tasks.Bipartit as Bipartit ( runTask )
 import Tasks.Isomorphism as Isomorphism ( runTask )
+import Tasks.StatementModel as StatementModel ( runTask )
 
 app :: String -- ^ task type
     -> String -- ^ task description
@@ -20,6 +21,7 @@ app "circle" d = Circle.runTask d
 app "hamilton" d = Hamilton.runTask d
 app "bipartit" d = Bipartit.runTask d
 app "iso" d = Isomorphism.runTask d
+app "al-model" d = StatementModel.runTask d
 app s _ = unlines $ ("Undefined task type '" ++ s ++ "'. Supported task types are:") : taskDescriptions
 
 help :: String
@@ -34,4 +36,5 @@ taskDescriptions =
     , "  - hamilton :: finds a hamilton path in a graph"
     , "  - bipartit :: finds a set of vertices that split a graph into two bipartit subgraphs"
     , "  - iso      :: finds an isomorphism from one graph to another"
+    , "  - al-model :: finds a model for a statement of propositional logic"
     ]

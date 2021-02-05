@@ -36,7 +36,7 @@ instance Readable (RelOp a) where
             readDiff = (spaces >> P.char '-' >> spaces) $> OpDiff
             readCompose = (spaces >> P.string "." >> spaces) $>  OpCompose
 
-instance (Num a, Ord a) => (DAO (Op (Set (a,a)))) (RelOp a) where
+instance (Num a, Ord a) => (DAO (Op c (Set (a,a)))) (RelOp a) where
     toValue OpSum = (+)
     toValue OpUnion = (&)
     toValue OpDiff = (-)

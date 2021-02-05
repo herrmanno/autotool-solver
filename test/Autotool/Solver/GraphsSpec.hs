@@ -5,7 +5,7 @@ import Prelude hiding ((+), (*))
 import Test.Hspec
 import Autotool.Data.GraphOp ( (+), (*), co )
 import Autotool.Data.Graph
-import Autotool.Data.LazyTree (showTree,  Tree(Node), Op(Op1, Op0) )
+import Autotool.Data.LazyTree (showTree,  Tree(Node), Op, mkOp0 )
 import Autotool.Solver.Graphs (solve)
 
 spec = do
@@ -36,8 +36,8 @@ spec = do
                        , kante 11 13
                        , kante 12 13
                        ]
-                ks = map (\i -> Op0 ("K" ++ show i) (mkK i)) [1..5]
-                ps = map (\i -> Op0 ("P" ++ show i) (mkP i)) [3..5]
-                cs = map (\i -> Op0 ("C" ++ show i) (mkC i)) [3..5]
+                ks = map (\i -> mkOp0 ("K" ++ show i) (mkK i)) [1..5]
+                ps = map (\i -> mkOp0 ("P" ++ show i) (mkP i)) [3..5]
+                cs = map (\i -> mkOp0 ("C" ++ show i) (mkC i)) [3..5]
                 ops = ks ++ ps ++ cs ++ [co, (+), (*)]
             in showTree (solve ops t) `shouldBe` "(co((P3) + (co(C4)))) + (((P4) + (K3)) + ((K1) + (K1)))"

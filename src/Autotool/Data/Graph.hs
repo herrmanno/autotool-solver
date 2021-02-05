@@ -70,7 +70,6 @@ edges (_,es) = es
 containsEdge :: (Eq a) => Graph a -> (a,a) -> Bool
 containsEdge (_,es) (a,b) = (a,b) `elem` es || (b,a) `elem` es
 
-
 neighbours :: (Eq a) => Graph a -> a -> [a]
 neighbours (vs, es) v = mapMaybe f (toList es) where
     f (a,b)
@@ -115,7 +114,10 @@ disconnectedSubgraphs g = map (subgraph g) bipartitNodes
         bipartitNodes = foldr foldNode [] vs
 
 -- | Renames a tree so that its vertices starts at `base`
-normalize :: (Integral a) => a -> Graph a -> (Graph a, (Graph a -> Graph a))
+normalize :: (Integral a)
+          => a                                  -- ^ the lowest number to start labeling vertices
+          -> Graph a                            -- ^ the graph to rename
+          -> (Graph a, Graph a -> Graph a)      -- ^ (the renamed graph, a function that reverts the renaming)
 normalize base g = (rename (mapping M.!) g, rename (remapping M.!))
     where
         min = base -- S.findMin (vertices g) - base

@@ -5,15 +5,15 @@ import Autotool.DAO (toValue)
 import Autotool.DAO.Set (Set)
 import Autotool.DAO.Relation (RelOp)
 import Autotool.DAO.Identifier (Identifier)
-import Autotool.Data.LazyTree (isOp0, Op(..), showTree, eval, trees)
+import Autotool.Data.LazyTree (Op, mkOp0, showTree)
 import Autotool.Solver.Relations (solveP)
 
 runTask :: String -> String
 runTask input = showTree $ solveP (rops ++ ops) t
     where
         desc = read input :: RelationDescription
-        ops = (map toValue $ operators desc) :: [Op (S.Set (Int,Int))]
-        rops = map (\(name,rel) -> Op0 (show name) (toValue rel)) (relations desc) :: [Op (S.Set (Int,Int))]
+        ops = (map toValue $ operators desc) :: [Op () (S.Set (Int,Int))]
+        rops = map (\(name,rel) -> mkOp0 (show name) (toValue rel)) (relations desc) :: [Op () (S.Set (Int,Int))]
         t = (toValue $ target desc) :: S.Set (Int,Int)
 
 data RelationDescription = RelationDescription
