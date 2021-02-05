@@ -8,10 +8,11 @@ import Autotool.DAO.Map (Map)
 import Autotool.DAO.Identifier (Identifier)
 import Autotool.Data.LazyTree (Op(..), showTree)
 import Autotool.Data.NestedSet (NSet)
-import Autotool.Solver.Sets (solve)
+import Autotool.Solver.Sets (solve, solveP)
 
+-- TODO: read limit and parallel flag from description
 runTask :: String -> String
-runTask input = showTree $ solve (sops ++ ops) t
+runTask input = showTree $ solveP (sops ++ ops) t
     where
         desc = read input :: SetDescription
         ops = (map toValue $ operators desc) :: [Op (NSet Int)]

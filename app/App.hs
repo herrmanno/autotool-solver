@@ -22,6 +22,7 @@ app "bipartit" d = Bipartit.runTask d
 app "iso" d = Isomorphism.runTask d
 app s _ = unlines $ ("Undefined task type '" ++ s ++ "'. Supported task types are:") : taskDescriptions
 
+help :: String
 help = unlines $ "USAGE: <task> <task description file>" : taskDescriptions
 
 taskDescriptions =

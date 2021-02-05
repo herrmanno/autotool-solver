@@ -21,6 +21,7 @@ module Autotool.Data.NestedSet
 import Data.Set (Set, empty, fromList, toList, insert)
 import qualified Data.Set as S
 import Data.List (intercalate)
+import Debug.Trace (trace)
 
 -- | Recursive sum type of 'either a value or a set of Ts'
 data T a = V a | S (Set (T a)) deriving (Eq, Ord, Show)
@@ -76,7 +77,9 @@ a &. s = insert (S a) s
 --
 
 powerSet :: (Ord a) => NSet a -> NSet a
-powerSet s = S.map S $ S.powerSet s
+powerSet s
+    | length s < 10 = S.map S $ S.powerSet s
+    | otherwise = trace "Cannot perform pow operation. Operand is too big" $ s
 
 toNSet :: (Ord a) => Set a -> NSet a
 toNSet = S.map V

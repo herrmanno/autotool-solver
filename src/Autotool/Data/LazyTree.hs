@@ -1,3 +1,4 @@
+{-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
 module Autotool.Data.LazyTree
@@ -13,6 +14,7 @@ module Autotool.Data.LazyTree
     , showTree
     , showFnTree
     , evalTree
+    , evalTree'
     , eval
     , trees
     , depth
@@ -53,9 +55,19 @@ eval (Op0 _ a) _ = a
 eval (Op1 _ f) [a] = f a
 eval (Op2 _ _ f) [a,b] = f a b
 
+-- | Strict version of `eval`
+eval' :: Op a -> [a] -> a
+eval' (Op0 _ !a) _ = a
+eval' (Op1 _ f) [!a] = let r = f a in r
+eval' (Op2 _ _ f) [!a,!b] = let r = f a b in r
+
 -- | Recursevely evaluates a operator tree
 evalTree :: Tree (Op b) -> b
 evalTree = foldTree eval
+
+-- | Strict version of `evalTree`
+evalTree' :: Tree (Op b) -> b
+evalTree' = foldTree eval'
 
 instance (Eq a) => Eq (Op a) where
     (Op0 _ a) == (Op0 _ b) = a == b
@@ -78,7 +90,7 @@ findTree ops t = searchTree ops (==t)
 searchTree :: (Eq a) => [Op a]              -- ^ the operations defining the tree type
                    -> (a -> Bool)             -- ^ the predicate the trees evaluation must satisfy
                    -> Tree (Op a)           -- ^ a tree that evaluates to `a` under `f`
-searchTree ops p = head $ filter (p . evalTree) factory
+searchTree ops p = head $ filter (p . evalTree') factory
     where
         factory = trees ops
 
@@ -92,13 +104,13 @@ findTreeLim :: (Eq a) =>
     -> Maybe (Tree (Op a))      -- ^ a tree that evaluates to `a` under `f`
 findTreeLim lim ops t = searchTreeLim lim ops (==t)
 
--- see `Autotool.Data.LazyTree.searchTree`
+-- | see `Autotool.Data.LazyTree.searchTree`
 searchTreeLim :: (Eq a) =>
     Int                         -- ^ limit of trees to create
     -> [Op a]                   -- ^ the operations defining the tree type
     -> (a -> Bool)              -- ^ the target value to match against
     -> Maybe (Tree (Op a))      -- ^ a tree that evaluates to `a` under `f`
-searchTreeLim lim ops p = find (p . evalTree) (take lim factory)
+searchTreeLim lim ops p = find (p . evalTree') (take lim factory)
     where
         factory = trees ops
 
