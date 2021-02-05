@@ -6,10 +6,10 @@ import Autotool.DAO.Set (Set)
 import Autotool.DAO.Relation (RelOp)
 import Autotool.DAO.Identifier (Identifier)
 import Autotool.Data.LazyTree (isOp0, Op(..), showTree, eval, trees)
-import Autotool.Solver.Relations (solve)
+import Autotool.Solver.Relations (solveP)
 
 runTask :: String -> String
-runTask input = showTree $ solve (rops ++ ops) t
+runTask input = showTree $ solveP (rops ++ ops) t
     where
         desc = read input :: RelationDescription
         ops = (map toValue $ operators desc) :: [Op (S.Set (Int,Int))]
