@@ -36,7 +36,6 @@ import qualified Data.Set as S
 import Data.Maybe (mapMaybe)
 import Data.List (find, permutations)
 
--- FIXME: a graph may need a Name for output!
 type Graph a = (Set a, Set (a,a))
 
 -- constructors

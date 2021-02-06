@@ -1,0 +1,4 @@
+StatementTransformDescription {
+    statement = (p <-> q) -> r && q,
+    operators = [!, ||, &&]
+}

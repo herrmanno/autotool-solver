@@ -1,0 +1,4 @@
+StatementEquivalentDescription {
+    statement = (p <-> q) -> r && q,
+    operators = [!, ||, &&]
+}

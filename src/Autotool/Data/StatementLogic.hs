@@ -1,45 +1,75 @@
+{-# LANGUAGE AllowAmbiguousTypes #-}
 module Autotool.Data.StatementLogic
     ( Statement(..)
+    , VarID
+    , Universe
     , Interpretation
+    , StatementOp
     , universe
     , interpretations
-    , freeVar
+    , model
+    , equiv
+    , true
+    , false
+    , var
     , (&&)
     , (||)
     , (!)
+    , (-->)
+    , (<-->)
     ) where
 
 import Prelude hiding ((&&), (||))
 import qualified Prelude as Pre ((&&), (||))
 import qualified Data.Map as M
 import Data.Tree ( Tree(Node), foldTree )
-import Text.ParserCombinators.ReadP (ReadP)
-import qualified Text.ParserCombinators.ReadP as P
-import Control.Applicative (Alternative((<|>)))
-import Data.Functor (($>))
-import Autotool.Readable ( closePar, openPar, Readable(readP), spacedString, spaced )
-import Autotool.Data.LazyTree (isOp0, Op, mkOp0C, mkOp1, mkOp2)
+import Autotool.Data.LazyTree (evalTree', isOp0, Op, mkOp0, mkOp0C, mkOp1, mkOp2)
+import Data.List (find, nub)
+import Data.Function (on)
 
-type Interpretation = M.Map Char Bool
+type VarID = Char
 
-newtype Statement = Statement { tree :: Tree (Op Interpretation Bool) } deriving (Show)
+type Universe = [VarID]
 
-universe :: Statement -> [Char]
+type Interpretation = M.Map VarID Bool
+
+type StatementOp = Op Interpretation Bool
+
+newtype Statement = Statement { tree :: Tree StatementOp } deriving (Eq, Show)
+
+universe :: Statement -> Universe
 universe = map head . foldTree f . tree
-    where f leaf children
-            | isOp0 leaf = [show leaf]
-            | otherwise = concat children
+    where
+        f leaf children
+            | isVar leaf = [show leaf]
+            | otherwise = nub $ concat children
+        isVar l = isOp0 l Pre.&& (1 == length (show l)) -- TODO: find a better way to identiy leafs
 
-interpretations :: [Char] -> [Interpretation]
+interpretations :: Universe -> [Interpretation]
+interpretations [] = [M.singleton '_' False, M.singleton '_' True]
 interpretations [x] = [M.singleton x False, M.singleton x True]
 interpretations (x:xs) = do
     i <- interpretations xs
     [M.insert x False i, M.insert x True i]
 
+equiv :: Statement -> Statement -> Bool
+equiv = (==) `on` model
+
+model :: Statement -> [(Interpretation, Bool)]
+model s = let t = tree s
+              is = interpretations $ universe s
+          in zip is $ map (`evalTree'` t) is
+
 -- operations
 
-freeVar :: Char -> Op Interpretation Bool
-freeVar c = mkOp0C [c] (M.! c)
+true :: Op Interpretation Bool
+true = mkOp0 "true" True
+
+false :: Op Interpretation Bool
+false = mkOp0 "false" False
+
+var :: VarID -> Op Interpretation Bool
+var c = mkOp0C [c] (M.! c)
 
 (!) :: Op Interpretation Bool
 (!) = mkOp1 "!" not
@@ -50,20 +80,10 @@ freeVar c = mkOp0C [c] (M.! c)
 (||) :: Op Interpretation Bool
 (||) = mkOp2 "||" True (Pre.||)
 
+(-->) :: Op Interpretation Bool
+(-->) = mkOp2 "->" True implication
+    where implication a b = not a Pre.|| b
 
--- Read(able) instance
-
-instance Read Statement where
-    readsPrec _ = P.readP_to_S readP
-
-instance Readable Statement where
-    readP = Statement <$> expr0
-        where
-            expr0 = P.chainl1 expr1 (spacedString "||" $> node2 (||))
-            expr1 = P.chainl1 expr2 (spacedString "&&" $> node2 (&&))
-            expr2 = term <|> node1 (!) <$> (spacedString "!" *> term)
-            term = var <|> spaced (openPar *> expr0 <* closePar)
-            var = node0 . freeVar <$> spaced (P.satisfy (`elem` ['a'..'z']))
-            node0 op = Node op []
-            node1 op a = Node op [a]
-            node2 op a b = Node op [a,b]
+(<-->) :: Op Interpretation Bool
+(<-->) = mkOp2 "<->" True equivalence
+    where equivalence a b = a == b

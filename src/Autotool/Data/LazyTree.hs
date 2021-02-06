@@ -17,6 +17,8 @@ module Autotool.Data.LazyTree
     , findTreeLim
     , searchTree
     , searchTreeLim
+    , searchTreeUnevaluated
+    , searchTreeUnevaluatedLim
     , showTree
     , showFnTree
     , evalTree
@@ -122,6 +124,15 @@ searchTree ops c p = head $ filter (p . evalTree' c) factory
     where
         factory = trees ops
 
+-- | Find a tree that satifies a given predicate
+searchTreeUnevaluated :: (Eq a)
+           => [Op c a]              -- ^ the operations defining the tree type
+           -> (Tree (Op c a) -> Bool)             -- ^ the predicate the trees evaluation must satisfy
+           -> Tree (Op c a)           -- ^ a tree that evaluates to `a` under `f`
+searchTreeUnevaluated ops p = head $ filter p factory
+    where
+        factory = trees ops
+
 -- | Find a tree that evaluates to a given value by creating at most `lim` trees
 --
 -- see `Autotool.Data.LazyTree.findTree`
@@ -141,6 +152,16 @@ searchTreeLim :: (Eq a) =>
     -> (a -> Bool)              -- ^ the target value to match against
     -> Maybe (Tree (Op c a))      -- ^ a tree that evaluates to `a` under `f`
 searchTreeLim lim ops c p = find (p . evalTree' c) (take lim factory)
+    where
+        factory = trees ops
+
+-- | Find a tree that satifies a given predicate
+searchTreeUnevaluatedLim :: (Eq a)
+           => Int                       -- ^ Limit
+           -> [Op c a]                  -- ^ the operations defining the tree type
+           -> (Tree (Op c a) -> Bool)   -- ^ the predicate the unevaluated tree must satisfy
+           -> Maybe (Tree (Op c a))
+searchTreeUnevaluatedLim lim ops p = find p (take lim factory)
     where
         factory = trees ops
 
