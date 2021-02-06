@@ -1,0 +1,37 @@
+name: Test
+
+on:
+  push:
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [macos-latest,ubuntu-latest,windows-latest]
+    env:
+      STACK_ROOT: ${{ github.workspace }}/.stack
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache .stack-work
+      uses: actions/cache@v2
+      env:
+        cache-name: stack-work
+      with:
+        path: .stack-work
+        key: ${{ runner.os }}-cache-${{ env.cache-name }}-${{ hashFiles('package.yaml','stack.yml','.github/workflows/haskell.yml') }}
+    - name: Cache .stack
+      uses: actions/cache@v2
+      env:
+        cache-name: stack
+      with:
+        path: .stack
+        key: ${{ runner.os }}-cache-${{ env.cache-name }}-${{ hashFiles('stack.yml','.github/workflows/haskell.yml') }}
+    - name: Setup Stack
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+      uses: mstksg/setup-stack@v2    
+    - name: Run tests
+      run: stack test
