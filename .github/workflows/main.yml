@@ -1,0 +1,48 @@
+name: Build executables
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macos-latest,ubuntu-latest,windows-latest]
+    env:
+      STACK_ROOT: ${{ github.workspace }}/.stack
+      EXECUTABLE: autotool-helper
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache .stack-work
+      uses: actions/cache@v2
+      env:
+        cache-name: stack-work
+      with:
+        path: .stack-work
+        key: ${{ runner.os }}-cache-${{ env.cache-name }}-${{ hashFiles('package.yaml','stack.yml','.github/workflows/haskell.yml') }}
+    - name: Cache .stack
+      uses: actions/cache@v2
+      env:
+        cache-name: stack
+      with:
+        path: .stack
+        key: ${{ runner.os }}-cache-${{ env.cache-name }}-${{ hashFiles('stack.yml','.github/workflows/haskell.yml') }}
+    - name: Setup Stack
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+      uses: mstksg/setup-stack@v2
+    - name: Build
+      run: stack build
+    - name: Run tests
+      run: stack test
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: ${{ runner.os }}-${{ env.EXECUTABLE }}
+        path: .stack-work/install/
