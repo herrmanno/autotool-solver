@@ -12,4 +12,4 @@ runTask s = show $ solve g
         desc = read s :: HamiltonDescription
         g = toValue (graph desc) :: G.Graph Int
 
-data HamiltonDescription = HamiltonDescription { graph :: DAO.Graph Int } deriving (Show,Read)
+newtype HamiltonDescription = HamiltonDescription { graph :: DAO.Graph Int } deriving (Show,Read)

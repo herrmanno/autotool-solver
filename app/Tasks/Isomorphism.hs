@@ -2,13 +2,14 @@ module Tasks.Isomorphism (runTask) where
 
 import Autotool.DAO
 import qualified Autotool.DAO.Graph as DAO ( Graph )
+import Autotool.DAO.Map (mapToFM)
 import qualified Autotool.Data.Graph as G
 import Autotool.Solver.Isomorphism (solve)
 
 
 runTask :: String -> String
 runTask s = case solve g h of
-    (Just iso) -> show iso
+    (Just iso) -> show $ mapToFM iso
     _ -> "ERROR: Cannot find an isomorphism from g to h"
     where
         desc = read s :: IsomorphismDescription

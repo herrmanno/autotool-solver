@@ -2,12 +2,13 @@ module Tasks.Circle (runTask) where
 
 import Autotool.DAO
 import qualified Autotool.DAO.Graph as DAO ( Graph )
+import Autotool.DAO.Set (mkSet)
 import qualified Autotool.Data.Graph as G
 import Autotool.Solver.Circle (solve)
 
 
 runTask :: String -> String
-runTask s = show $ solve l g
+runTask s = unlines $ map (show . mkSet) $ solve l g
     where
         desc = read s :: CircleDescription
         l = Tasks.Circle.length desc
