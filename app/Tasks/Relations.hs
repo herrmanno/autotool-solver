@@ -1,6 +1,7 @@
-module Tasks.Relations (runTask) where
+module Tasks.Relations (task) where
 
 import qualified Data.Set as S
+import Task (Task(..))
 import Autotool.DAO (toValue)
 import Autotool.DAO.Set (Set)
 import Autotool.DAO.Relation (RelOp)
@@ -8,8 +9,27 @@ import Autotool.DAO.Identifier (Identifier)
 import Autotool.Data.LazyTree (Op, mkOp0, showTree)
 import Autotool.Solver.Relations (solveP)
 
-runTask :: String -> String
-runTask input = showTree $ solveP (rops ++ ops) t
+task :: Task
+task = Task
+    { runTask = run
+    , name = "rels"
+    , autotoolName = "Rel, Relation"
+    , description = "Finds an expression that evaluates to a given relation"
+    , longDescription = "Finds an expression that evaluates to a given relation"
+    , parameters =
+        [ ("operators", "The operators the expression may contain")
+        , ("sets", "The given relations the expression may contain")
+        , ("target", "The value the expression should match.")
+        ]
+    , exampleInput = show $ RelationDescription
+        { operators = read "[+, &, -, .]"
+        , relations = read "[ (R, {(1 , 4) , (2 , 4) , (3 , 2) , (4 , 1)}), (S, {(1 , 4) , (2 , 2) , (2 , 3) , (4 , 4)}) ]"
+        , target = read "{(1 , 1) , (1 , 4) , (2 , 1) , (2 , 2) , (2 , 4) , (4 , 1) , (4 , 4)}"
+        }
+    }
+
+run :: String -> String
+run input = showTree $ solveP (rops ++ ops) t
     where
         desc = read input :: RelationDescription
         ops = (map toValue $ operators desc) :: [Op () (S.Set (Int,Int))]

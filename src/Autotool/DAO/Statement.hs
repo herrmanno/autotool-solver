@@ -9,6 +9,7 @@ import qualified Text.ParserCombinators.ReadP as P
 import Control.Applicative (Alternative((<|>)))
 import Data.Functor (($>))
 import qualified Data.Map as M
+import Autotool.Data.LazyTree (showTree)
 import Autotool.Readable
     ( closePar,
       openPar,
@@ -23,7 +24,10 @@ import qualified  Autotool.Data.StatementLogic as SL
 import Autotool.DAO.Identifier (Identifier, mkId)
 import Autotool.DAO.Map (Map, mapToFM)
 
-type Statement = Tree (Op SL.Interpretation Bool)
+type Statement = Tree (Op SL.Interpretation Bool) -- TODO: use newtype instead
+
+instance {-# OVERLAPS #-} Show Statement where
+    show = showTree
 
 instance {-# OVERLAPS #-} Read Statement where
     readsPrec _ = P.readP_to_S readP

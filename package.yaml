@@ -22,9 +22,11 @@ description:         Please see the README on GitHub at <https://github.com/herr
 dependencies:
 - base >= 4.7 && < 5
 - containers >= 0.5.6 && < 6
+- text
 - parsec >= 3.1.14.0 && < 4
 - parallel >= 3.2.2.0 && < 4
 - deepseq >= 1.1.0.2 && < 2
+- pretty-simple >= 4.0.0.0 && < 5
 
 library:
   source-dirs: src

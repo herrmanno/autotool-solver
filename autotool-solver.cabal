@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a7d83a54783eec9be67b6697de5f368ca1bb55d45e82605b76b62ef47237beda
+-- hash: 89c073f09e2a76ddfbd296a08511d1edf0bf9280c5c85cc255b02d69a2983e02
 
 name:           autotool-solver
 version:        0.1.0.0
@@ -71,12 +71,15 @@ library
     , deepseq >=1.1.0.2 && <2
     , parallel >=3.2.2.0 && <4
     , parsec >=3.1.14.0 && <4
+    , pretty-simple >=4.0.0.0 && <5
+    , text
   default-language: Haskell2010
 
 executable autotool-helper
   main-is: Main.hs
   other-modules:
       App
+      Task
       Tasks.Bipartit
       Tasks.Circle
       Tasks.Graphs
@@ -101,6 +104,8 @@ executable autotool-helper
     , deepseq >=1.1.0.2 && <2
     , parallel >=3.2.2.0 && <4
     , parsec >=3.1.14.0 && <4
+    , pretty-simple >=4.0.0.0 && <5
+    , text
   default-language: Haskell2010
 
 test-suite autotool-solver-test
@@ -136,4 +141,6 @@ test-suite autotool-solver-test
     , hspec
     , parallel >=3.2.2.0 && <4
     , parsec >=3.1.14.0 && <4
+    , pretty-simple >=4.0.0.0 && <5
+    , text
   default-language: Haskell2010
