@@ -1,0 +1,3 @@
+StatementCNFDescription {
+    statement = true  -> (((q -> q) -> s) -> p)
+}

@@ -6,9 +6,7 @@ import Data.Foldable (find)
 import Autotool.Data.LazyTree (evalTree')
 
 
-solve ::
-      Statement
-      -> Interpretation
+solve :: Statement -> Interpretation
 solve s = case find (\c -> evalTree' c (tree s) ) is of
             (Just i) -> i
             _ -> error "Could not find a model"

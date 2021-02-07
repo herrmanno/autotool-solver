@@ -11,6 +11,8 @@ import Tasks.Isomorphism as Isomorphism ( runTask )
 import Tasks.StatementModel as StatementModel ( runTask )
 import Tasks.StatementEquivalent as StatementEquivalent ( runTask )
 import Tasks.StatementTransform as StatementTransform ( runTask )
+import Tasks.StatementCNF as StatementCNF ( runTask )
+import Tasks.StatementDNF as StatementDNF ( runTask )
 
 app :: String -- ^ task type
     -> String -- ^ task description
@@ -26,6 +28,8 @@ app "iso" d = Isomorphism.runTask d
 app "al-model" d = StatementModel.runTask d
 app "al-equiv" d = StatementEquivalent.runTask d
 app "al-trans" d = StatementTransform.runTask d
+app "al-cnf" d = StatementCNF.runTask d
+app "al-dnf" d = StatementDNF.runTask d
 app s _ = unlines $ ("Undefined task type '" ++ s ++ "'. Supported task types are:") : taskDescriptions
 
 help :: String
@@ -43,4 +47,6 @@ taskDescriptions =
     , "  - al-model :: finds a model for a statement of propositional logic"
     , "  - al-equiv :: finds an equivalent statement by brute forcing"
     , "  - al-trans :: finds an equivalent statement by fixed transformation rules"
+    , "  - al-cnf :: finds a semantically equivalent cnf for a given statement"
+    , "  - al-dnf :: finds a semantically equivalent dnf for a given statement"
     ]

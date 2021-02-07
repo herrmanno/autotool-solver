@@ -16,8 +16,6 @@ import Autotool.Data.StatementLogic
       , (-->)
       , (<-->)
       )
-import Autotool.Data.LazyTree (showTree, evalTree')
-import Autotool.Data.Parallel.LazyTree (searchTreeUnevaluatedLimP)
 
 
 solve ::

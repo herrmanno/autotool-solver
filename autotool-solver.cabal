@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 97212822fc4f9025981c0ed0f02ed29868057c3659a618abceee419eb9d7be3d
+-- hash: a7d83a54783eec9be67b6697de5f368ca1bb55d45e82605b76b62ef47237beda
 
 name:           autotool-solver
 version:        0.1.0.0
@@ -54,6 +54,8 @@ library
       Autotool.Solver.Isomorphism
       Autotool.Solver.Relations
       Autotool.Solver.Sets
+      Autotool.Solver.StatementCNF
+      Autotool.Solver.StatementDNF
       Autotool.Solver.StatementEquivalent
       Autotool.Solver.StatementModel
       Autotool.Solver.StatementTransform
@@ -82,6 +84,8 @@ executable autotool-helper
       Tasks.Isomorphism
       Tasks.Relations
       Tasks.Sets
+      Tasks.StatementCNF
+      Tasks.StatementDNF
       Tasks.StatementEquivalent
       Tasks.StatementModel
       Tasks.StatementTransform
@@ -115,6 +119,8 @@ test-suite autotool-solver-test
       Autotool.Solver.IsomorphismSpec
       Autotool.Solver.RelationsSpec
       Autotool.Solver.SetsSpec
+      Autotool.Solver.StatementCNFSpec
+      Autotool.Solver.StatementDNFSpec
       Autotool.Solver.StatementEquivalentSpec
       Autotool.Solver.StatementModelSpec
       Autotool.Solver.StatementTransformSpec

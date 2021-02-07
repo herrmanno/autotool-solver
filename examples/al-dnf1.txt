@@ -1,0 +1,3 @@
+StatementDNFDescription {
+    statement = z -> ((y -> x) -> y)
+}
