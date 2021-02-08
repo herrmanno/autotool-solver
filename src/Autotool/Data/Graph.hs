@@ -66,6 +66,7 @@ vertices (vs,_) = vs
 edges :: Graph a -> Set (a,a)
 edges (_,es) = es
 
+-- | > containsEdge g (a,b) := (a,b) ∈ edges_G ∨ (b,a) ∈ edges_G
 containsEdge :: (Eq a) => Graph a -> (a,a) -> Bool
 containsEdge (_,es) (a,b) = (a,b) `elem` es || (b,a) `elem` es
 
@@ -84,7 +85,7 @@ complement (vs, es) = let esAll = fromList $ allEdges (toList vs) in (vs, diff e
 join :: (Ord a, Num a) => Graph a -> Graph a -> Graph a
 join g@(vs, es) h@(hs,_) = (S.union vs vs', edges) where
     (vs', es') = rename renameF h
-    edges = fromList $ concatMap (\v -> map (,v) (toList vs')) (toList vs)
+    edges = S.unions [es, es', fromList $ concatMap (\v -> map (,v) (toList vs')) (toList vs) ]
     maxV = S.findMax vs
     minV' = S.findMin hs
     renameF = if maxV >= minV' then (+maxV) else id
@@ -141,10 +142,9 @@ degrees g@(vs,_) = foldr f IM.empty vs
         alter (Just i) = Just $ i + 1
         alter _ = Just 1
 
-{- | Returns true if two graphs are similiar
-    
-    (vG,eG) ~ (vH,eH) := vG = vH ∧ ∀(x,y) ∈ eG: (x,y) ∈ eH ∨ (y,x) ∈ eH
- -}
+-- | Returns true if two graphs are similiar
+--
+-- prop> (vG,eG) ~ (vH,eH) := vG = vH ∧ ∀(x,y) ∈ eG: (x,y) ∈ eH ∨ (y,x) ∈ eH
 similiar :: (Eq a) => Graph a -> Graph a -> Bool
 similiar g h = vsEq && esEq
     where

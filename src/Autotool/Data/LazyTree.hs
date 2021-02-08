@@ -216,6 +216,13 @@ combinations xs = do
     a <- xs
     b <- xs
     return [a, b]
+-- | builds all possible tuples (as list [a,b]) from a given list
+--
+-- Seems in reality to be an improvement to 'combinations'. The other implementation is kept
+-- for comparison in the future. Maybe it would be clever to use one or ther other implementation
+-- based on the given task.
+combinations' :: [a] -> [[a]]
+combinations' xs = let zs = zip [0..] xs in do { (ai,a) <- zs; (bi,b) <- drop ai zs; if ai == bi then [[a,b]] else [[a,b],[b,a]] }
 
 depth :: Tree (Op c a) -> Int
 depth = length . levels

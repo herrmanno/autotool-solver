@@ -6,7 +6,7 @@ import Autotool.Data.Graph ( Graph, complement, join, add )
 import Autotool.Data.LazyTree ( Op, mkOp1, mkOp2 )
 
 (+) :: (Num a, Ord a) => Op c (Graph a)
-(+) = mkOp2 "+" True add
+(+) = mkOp2 "+" False add
 
 (*) :: (Num a, Ord a) => Op c (Graph a)
 (*) = mkOp2 "*" False join

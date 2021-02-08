@@ -40,4 +40,39 @@ spec = do
                 ps = map (\i -> mkOp0 ("P" ++ show i) (mkP i)) [3..5]
                 cs = map (\i -> mkOp0 ("C" ++ show i) (mkC i)) [3..5]
                 ops = ks ++ ps ++ cs ++ [co, (+), (*)]
-            in showTree (solve ops t) `shouldBe` "(co((P3) + (co(C4)))) + (((P4) + (K3)) + ((K1) + (K1)))"
+            -- in showTree (solve ops t) `shouldBe` "(co((P3) + (co(C4)))) + (((P4) + (K3)) + ((K1) + (K1)))"
+            in showTree (solve ops t) `shouldBe` "((co(P3)) * (C4)) + (((P4) + (K3)) + ((K1) + (K1)))"
+        it "finds term w/ a target value from a set of graphs and operations on them (2)" $
+            let
+                t = mkGraph [0..10] [ kante 0 6
+                    , kante 0 7
+                    , kante 0 8
+                    , kante 0 9
+                    , kante 1 6
+                    , kante 1 7
+                    , kante 1 8
+                    , kante 1 9
+                    , kante 2 6
+                    , kante 2 7
+                    , kante 2 8
+                    , kante 2 9
+                    , kante 3 6
+                    , kante 3 7
+                    , kante 3 8
+                    , kante 3 9
+                    , kante 4 6
+                    , kante 4 7
+                    , kante 4 8
+                    , kante 4 9
+                    , kante 5 6
+                    , kante 5 7
+                    , kante 5 8
+                    , kante 5 9
+                    , kante 6 8
+                    , kante 7 9
+                    ]
+                ks = map (\i -> mkOp0 ("K" ++ show i) (mkK i)) [1..5]
+                ps = map (\i -> mkOp0 ("P" ++ show i) (mkP i)) [3..5]
+                cs = map (\i -> mkOp0 ("C" ++ show i) (mkC i)) [3..5]
+                ops = ks ++ ps ++ cs ++ [co, (+), (*)]
+            in showTree (solve ops t) `shouldBe` "(co(((K1) * (K5)) + (C4))) + (K1)"
