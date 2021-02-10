@@ -1,6 +1,6 @@
 module Tasks.StatementModel (task) where
 
-import Task (Task(..))
+import Task (Task(..), TaskInput, TaskResult(..), readInputM)
 import Autotool.DAO (toValue)
 import qualified Autotool.DAO.Statement as DAO
 import qualified Autotool.DAO.Map as DAO
@@ -24,11 +24,13 @@ task = Task
         }
     }
 
-run :: String -> String
-run s = show $ (toValue :: Interpretation -> DAO.Map DAO.Identifier Bool ) $ solve stm
-    where
-        desc = read s :: StatementModelDescription
-        stm = toValue (statement desc) :: Statement
+run :: TaskInput -> TaskResult String
+run input = do
+    desc <- readInputM input
+    let stm = toValue (statement desc) :: Statement
+        r = solve stm
+    Result $ show (toDao r)
+    where toDao = toValue :: Interpretation -> DAO.Map DAO.Identifier Bool
 
 newtype StatementModelDescription = StatementModelDescription
     { statement :: DAO.Statement

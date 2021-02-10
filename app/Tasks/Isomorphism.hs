@@ -1,6 +1,6 @@
 module Tasks.Isomorphism (task) where
 
-import Task (Task(..))
+import Task (Task(..), TaskInput, TaskResult(..), readInputM)
 import Autotool.DAO (toValue)
 import qualified Autotool.DAO.Graph as DAO ( Graph )
 import Autotool.DAO.Map (mapToFM)
@@ -27,14 +27,15 @@ task = Task
     }
 
 
-run :: String -> String
-run s = case solve g h of
-    (Just iso) -> show $ mapToFM iso
-    _ -> "ERROR: Cannot find an isomorphism from g to h"
-    where
-        desc = read s :: IsomorphismDescription
-        g = toValue (graph1 desc) :: G.Graph Int
+run :: TaskInput -> TaskResult String
+run s = do
+    desc <- readInputM s
+    let g = toValue (graph1 desc) :: G.Graph Int
         h = toValue (graph2 desc) :: G.Graph Int
+        r = solve g h -- TODO: solve (findIsomorphism) may return Either
+    case r of
+        (Just iso) -> Result $ show $ mapToFM iso
+        _ -> Error "ERROR: Cannot find an isomorphism from g to h"
 
 data IsomorphismDescription = IsomorphismDescription
     { graph1 :: DAO.Graph Int

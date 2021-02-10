@@ -1,6 +1,7 @@
 import System.Environment (getArgs)
 import App (app, taskHelp, help)
 import Control.Exception (catch, handle, SomeException(..))
+import Task (TaskInput(input), defaultTaskInput, TaskResult(..))
 
 main = do
     args <- getArgs
@@ -10,6 +11,12 @@ main = do
         go ["help", taskname] = return $ taskHelp taskname
         go [command,filename] = do
             input <- readFile filename
-            return $ app command input
+            let taskInput = defaultTaskInput { Task.input = input }
+            return $ formatTaskOutput $ app command taskInput
         go _ = return help
-        onError e = return $ "ERROR\t" ++ show (e::Control.Exception.SomeException)
+        onError e = return $ "ERROR:\r\n\t" ++ show (e::Control.Exception.SomeException)
+
+formatTaskOutput :: TaskResult String -> String
+formatTaskOutput (Error e) = "ERROR:\r\n\t" ++ e
+formatTaskOutput (Result r) = "RESULT:\r\n\t" ++ r
+formatTaskOutput (Results rs) = "RESULTS:\r\n" ++ unlines (map ("\t"++) rs)

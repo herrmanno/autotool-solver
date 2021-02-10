@@ -1,6 +1,7 @@
 module Tasks.Bipartit (task) where
 
-import Task (Task(..))
+
+import Task (Task(..), TaskInput, TaskResult(..), readInputM, fromEither)
 import Autotool.DAO ( DAO(toValue) )
 import qualified Autotool.DAO.Graph as DAO ( Graph )
 import Autotool.DAO.Set (mkSet)
@@ -20,11 +21,12 @@ task = Task
         }
     }
 
-run :: String -> String
-run s = show $ mkSet $ solve g
-    where
-        desc = read s :: BipartitGraphsDescription
-        g = toValue (graph desc) :: G.Graph Int
+run :: TaskInput -> TaskResult String
+run s = do
+    desc <- readInputM s
+    let g = toValue (graph desc) :: G.Graph Int
+    r <- fromEither $ solve g
+    Result (show $ mkSet r)
 
 newtype BipartitGraphsDescription = BipartitGraphsDescription
     { graph :: DAO.Graph Int

@@ -1,6 +1,6 @@
 module App ( app, taskHelp, help ) where
 
-import Task (Task(..), describeTask, shortDescribeTask)
+import Task (Task(..), describeTask, shortDescribeTask, TaskInput, TaskResult(..))
 import qualified Tasks.Sets as Set ( task )
 import qualified Tasks.Relations as Relation ( task )
 import qualified Tasks.Structures as Structures ( task )
@@ -37,11 +37,11 @@ tasks =
     ]
 
 app :: String -- ^ task type
-    -> String -- ^ task description
-    -> String -- ^ output
+    -> TaskInput -- ^ task description
+    -> TaskResult String -- ^ output
 app t d = case findTask t of
     (Just t) -> runTask t d
-    _        -> unknownTasktype t
+    _        -> Error $ "Task '" ++ t ++ "' not found."
 
 taskHelp t = case findTask t of
     (Just t) -> describeTask t

@@ -1,6 +1,6 @@
 module Tasks.Graphs (task) where
 
-import Task (Task(..))
+import Task (Task(..), TaskInput, TaskResult(..), readInputM)
 import Autotool.Data.LazyTree (showTree, Op)
 import Autotool.DAO ( toValue )
 import qualified Autotool.DAO.Graph as DAO ( Graph, GraphConst, GraphOp )
@@ -26,13 +26,14 @@ task = Task
         }
     }
 
-run :: String -> String
-run s = showTree $ solve (consts ++ operators) t
-    where
-        desc = read s :: GraphsDescription
-        t = toValue $ target desc :: G.Graph Int
+run :: TaskInput -> TaskResult String
+run s = do
+    desc <- readInputM s
+    let t = toValue $ target desc :: G.Graph Int
         operators = map toValue $ ops desc :: [Op () (G.Graph Int)]
         consts = map toValue $ graphs desc :: [Op () (G.Graph Int)]
+        r = solve (consts ++ operators) t
+    Result $ showTree r
 
 data GraphsDescription = GraphsDescription
     { target :: DAO.Graph Int

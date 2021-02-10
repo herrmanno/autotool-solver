@@ -1,6 +1,6 @@
 module Tasks.StatementDNF (task) where
 
-import Task (Task(..))
+import Task (Task(..), TaskInput, TaskResult(..), readInputM)
 import Autotool.Data.LazyTree (showTree)
 import Autotool.DAO (toValue)
 import qualified Autotool.DAO.Statement as DAO
@@ -23,11 +23,12 @@ task = Task
         }
     }
 
-run :: String -> String
-run s = showTree $ tree $ solve stm
-    where
-        desc = read s :: StatementDNFDescription
-        stm = toValue (statement desc) :: Statement
+run :: TaskInput -> TaskResult String
+run input = do
+    desc <- readInputM input
+    let stm = toValue (statement desc) :: Statement
+        r = solve stm
+    Result $ showTree $ tree r
 
 newtype StatementDNFDescription = StatementDNFDescription
     { statement :: DAO.Statement

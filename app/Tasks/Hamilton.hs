@@ -1,6 +1,6 @@
 module Tasks.Hamilton (task) where
 
-import Task (Task(..))
+import Task (Task(..), TaskInput, TaskResult(..), readInputM)
 import Autotool.DAO ( toValue )
 import qualified Autotool.DAO.Graph as DAO ( Graph )
 import qualified Autotool.Data.Graph as G
@@ -22,10 +22,11 @@ task = Task
     }
 
 
-run :: String -> String
-run s = show $ solve g
-    where
-        desc = read s :: HamiltonDescription
-        g = toValue (graph desc) :: G.Graph Int
+run :: TaskInput -> TaskResult String
+run s = do
+    desc <- readInputM s
+    let g = toValue (graph desc) :: G.Graph Int
+        r = solve g
+    Result $ show r
 
 newtype HamiltonDescription = HamiltonDescription { graph :: DAO.Graph Int } deriving (Show,Read)

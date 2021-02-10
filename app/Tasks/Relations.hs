@@ -1,7 +1,7 @@
 module Tasks.Relations (task) where
 
 import qualified Data.Set as S
-import Task (Task(..))
+import Task (Task(..), TaskInput, TaskResult(..), readInputM)
 import Autotool.DAO (toValue)
 import Autotool.DAO.Set (Set)
 import Autotool.DAO.Relation (RelOp)
@@ -28,13 +28,14 @@ task = Task
         }
     }
 
-run :: String -> String
-run input = showTree $ solveP (rops ++ ops) t
-    where
-        desc = read input :: RelationDescription
-        ops = (map toValue $ operators desc) :: [Op () (S.Set (Int,Int))]
+run :: TaskInput -> TaskResult String
+run input = do
+    desc <- readInputM input
+    let ops = (map toValue $ operators desc) :: [Op () (S.Set (Int,Int))]
         rops = map (\(name,rel) -> mkOp0 (show name) (toValue rel)) (relations desc) :: [Op () (S.Set (Int,Int))]
         t = (toValue $ target desc) :: S.Set (Int,Int)
+        r = solveP (rops ++ ops) t
+    Result $ showTree r
 
 data RelationDescription = RelationDescription
     { operators :: [RelOp Int]

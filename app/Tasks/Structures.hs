@@ -1,10 +1,11 @@
 module Tasks.Structures (task) where
 
 
-import Task (Task(..))
+import Task (Task(..), TaskResult(..), readInputM, TaskInput)
 import Autotool.Data.LazyTree (showFnTree)
 import Autotool.DAO.Structure ( Struktur(..) )
 import Autotool.Solver.Structures (solve)
+import Control.Monad (liftM)
 
 task :: Task
 task = Task
@@ -26,7 +27,7 @@ task = Task
     }
 
 
-run :: String -> String
-run = showFnTree . solve . structs . read
+run :: TaskInput -> TaskResult String
+run input = showFnTree . solve . structs <$> readInputM input
 
 newtype StructureDescription = StructureDescription { structs :: [Struktur] } deriving (Show,Read)

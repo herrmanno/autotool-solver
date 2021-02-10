@@ -1,6 +1,6 @@
 module Tasks.StatementTransform (task) where
 
-import Task (Task(..))
+import Task (Task(..), TaskInput, TaskResult(..), readInputM)
 import Autotool.DAO (toValue)
 import qualified Autotool.DAO.Statement as DAO
 import Autotool.Data.StatementLogic (Statement(..), StatementOp)
@@ -25,12 +25,13 @@ task = Task
         }
     }
 
-run :: String -> String
-run s = showTree $ tree $ solve stm ops
-    where
-        desc = read s :: StatementTransformDescription
-        stm = toValue (statement desc) :: Statement
+run :: TaskInput -> TaskResult String
+run input = do
+    desc <- readInputM input
+    let stm = toValue (statement desc) :: Statement
         ops = map toValue (operators desc) :: [StatementOp]
+        r = solve stm ops
+    Result $ showTree (tree r)
 
 data StatementTransformDescription = StatementTransformDescription
     { statement :: DAO.Statement

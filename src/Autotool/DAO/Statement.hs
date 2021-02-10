@@ -9,7 +9,6 @@ import qualified Text.ParserCombinators.ReadP as P
 import Control.Applicative (Alternative((<|>)))
 import Data.Functor (($>))
 import qualified Data.Map as M
-import Autotool.Data.LazyTree (showTree)
 import Autotool.Readable
     ( closePar,
       openPar,
@@ -18,7 +17,7 @@ import Autotool.Readable
       spaced,
       Readable(..) )
 import Autotool.DAO ( DAO(..) )
-import Autotool.Data.LazyTree (Tree(Node),  Op)
+import Autotool.Data.LazyTree (Tree(Node),  Op, showTree)
 import Autotool.Data.StatementLogic ((&&), (||), (!), (-->), (<-->), var, true, false)
 import qualified  Autotool.Data.StatementLogic as SL
 import Autotool.DAO.Identifier (Identifier, mkId)

@@ -1,6 +1,6 @@
 module Tasks.Circle (task) where
 
-import Task (Task(..))
+import Task (Task(..), TaskInput, TaskResult(..), readInputM)
 import Autotool.DAO (toValue)
 import qualified Autotool.DAO.Graph as DAO ( Graph )
 import Autotool.DAO.Set (mkSet)
@@ -21,12 +21,13 @@ task = Task
         }
     }
 
-run :: String -> String
-run s = unlines $ map (show . mkSet) $ solve l g
-    where
-        desc = read s :: CircleDescription
-        l = Tasks.Circle.length desc
+run :: TaskInput -> TaskResult String
+run s = do
+    desc <- readInputM s
+    let l = Tasks.Circle.length desc
         g = toValue (graph desc) :: G.Graph Int
+        r = solve l g
+    Results (map (show . mkSet) r)
 
 data CircleDescription = CircleDescription
     { graph :: DAO.Graph Int
