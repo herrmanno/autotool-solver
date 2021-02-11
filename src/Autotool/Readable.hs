@@ -12,7 +12,9 @@ import Text.ParserCombinators.ReadP
     , skipSpaces
     , between
     , munch1
-    , sepBy )
+    , sepBy
+    , satisfy
+    )
 import Data.Char (isDigit)
 
 class Readable a where
@@ -28,8 +30,14 @@ spaces = skipSpaces
 spaced :: ReadP a -> ReadP a
 spaced r = spaces *> r <* spaces
 
+number :: (Read a, Num a) => ReadP a
+number = read <$> munch1 (`elem` ['0'..'9'])
+
 spacedString :: String -> ReadP String
 spacedString str = spaced $ string str
+
+equals :: ReadP ()
+equals = char '=' >> spaces
 
 comma :: ReadP ()
 comma = char ',' >> spaces

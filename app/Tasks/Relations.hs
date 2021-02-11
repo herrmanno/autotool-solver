@@ -31,9 +31,9 @@ task = Task
 run :: TaskInput -> TaskResult String
 run input = do
     desc <- readInputM input
-    let ops = (map toValue $ operators desc) :: [Op () (S.Set (Int,Int))]
+    let ops = toValue (operators desc) :: [Op () (S.Set (Int,Int))]
         rops = map (\(name,rel) -> mkOp0 (show name) (toValue rel)) (relations desc) :: [Op () (S.Set (Int,Int))]
-        t = (toValue $ target desc) :: S.Set (Int,Int)
+        t = toValue (target desc) :: S.Set (Int,Int)
         r = solveP (rops ++ ops) t
     Result $ showTree r
 

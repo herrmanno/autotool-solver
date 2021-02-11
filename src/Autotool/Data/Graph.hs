@@ -10,6 +10,7 @@ module Autotool.Data.Graph
     , kante
     , vertices
     , edges
+    , insertEdge
     , similiar
     , neighbours
     , disconnectedSubgraphs
@@ -26,6 +27,9 @@ module Autotool.Data.Graph
     , runIsomorphism
     , findIsomorphism
     , isIsomorphTo
+    , GraphConstraint(..)
+    , satisfiesConstraint
+    , breaksConstraint
     , Color(..)
 ) where
 
@@ -65,6 +69,9 @@ vertices (vs,_) = vs
 
 edges :: Graph a -> Set (a,a)
 edges (_,es) = es
+
+insertEdge :: (Ord a) => Graph a -> (a,a) -> Graph a
+insertEdge (vs,es) e = (vs, S.insert e es)
 
 -- | > containsEdge g (a,b) := (a,b) ∈ edges_G ∨ (b,a) ∈ edges_G
 containsEdge :: (Eq a) => Graph a -> (a,a) -> Bool
@@ -142,6 +149,16 @@ degrees g@(vs,_) = foldr f IM.empty vs
         alter (Just i) = Just $ i + 1
         alter _ = Just 1
 
+clique :: (Eq a, Ord a) => Graph a -> a -> [a]
+clique g@(vs,es) v = clique
+    where
+        ns = neighbours g v
+        inClique v = all (\vn -> vn == v || connected g vn v) ns
+        clique = filter inClique ns
+
+cliques :: (Eq a, Ord a) => Graph a -> [[a]]
+cliques g@(vs,_) = map (clique g) (S.toList vs)
+
 -- | Returns true if two graphs are similiar
 --
 -- prop> (vG,eG) ~ (vH,eH) := vG = vH ∧ ∀(x,y) ∈ eG: (x,y) ∈ eH ∨ (y,x) ∈ eH
@@ -191,6 +208,36 @@ isIsomorphTo g h = areCongruent && isoExists
         isoExists = case findIsomorphism g h of
                 (Just _) -> True
                 _ -> False
+
+-- Constraints
+
+data GraphConstraint a
+    = Vertices Int
+    | Edges Int
+    | MaxDegree Int
+    | MaxClique Int
+    | Edge a a
+    | Degree a Int
+    | Not (GraphConstraint a)
+    deriving (Show)
+
+satisfiesConstraint :: (Eq a, Ord a) => GraphConstraint a -> Graph a -> Bool
+satisfiesConstraint (Vertices n) (vs,_) = n == S.size vs
+satisfiesConstraint (Edges n) (_, es) = n == S.size es
+satisfiesConstraint (MaxDegree n) g = n >= maximum (IM.keys $ degrees g)
+satisfiesConstraint (MaxClique n) g = n >= maximum (map length (cliques g))
+satisfiesConstraint (Edge a b) g = connected g a b
+satisfiesConstraint (Degree a n) g = n == degree g a
+satisfiesConstraint (Not c) g = not $ satisfiesConstraint c g
+
+breaksConstraint :: (Eq a, Ord a) => GraphConstraint a -> Graph a -> Bool
+breaksConstraint (Vertices n) (vs,_) = n < S.size vs
+breaksConstraint (Edges n) (_, es) = n < S.size es
+breaksConstraint (MaxDegree n) g = n < maximum (IM.keys $ degrees g)
+breaksConstraint (MaxClique n) g = n < maximum (map length (cliques g))
+breaksConstraint (Edge _ _) _ = False
+breaksConstraint (Degree a n) g = n < degree g a
+breaksConstraint (Not c) g = satisfiesConstraint c g
 
 -- Colors
 

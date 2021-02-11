@@ -12,7 +12,7 @@ import Autotool.DAO.Structure ( Struktur(..) )
 solve :: [Struktur] -> Tree (Op () Int)
 solve ss = let
     lim = 300000
-    ops = map toValue ss
+    ops = toValue ss
     ts = map trees ops
     evalTrees n = map (evalTree () . (!!n)) ts
     idx = find ((1<) . (length . nub . evalTrees)) [0..lim]

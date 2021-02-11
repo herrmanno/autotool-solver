@@ -14,6 +14,7 @@ import qualified Tasks.StatementEquivalent as StatementEquivalent ( task )
 import qualified Tasks.StatementTransform as StatementTransform ( task )
 import qualified Tasks.StatementCNF as StatementCNF ( task )
 import qualified Tasks.StatementDNF as StatementDNF ( task )
+import qualified Tasks.GraphParam as GraphParam ( task )
 import Data.Foldable (find)
 import Data.Char (toLower)
 import Data.Function (on)
@@ -26,13 +27,14 @@ tasks =
     , StatementTransform.task
     , StatementCNF.task
     , StatementDNF.task
-    ,Set.task
+    , Set.task
     , Relation.task
     , Graphs.task
     , Circle.task
     , Hamilton.task
     , Bipartit.task
     , Isomorphism.task
+    , GraphParam.task
     , Structures.task
     ]
 

@@ -1,0 +1,18 @@
+GraphParamDescription
+    { universe  = [a,b,c,d,e,f]
+    , constraints = [ vertices = 6
+                       , edges = 10
+                       , maxdegree = 4
+                       , maxclique = 4
+                       , edge ( f, a)
+                       , edge ( e, a)
+                       , edge ( e, f)
+                       , Not (edge ( b, c))
+                       , Not (edge ( d, e))
+                       , degree (b) = 3
+                       , degree (c) = 3
+                       , degree (e) = 4
+                       , degree (d) = 2
+                       , degree (f) = 4
+                       ]
+    }

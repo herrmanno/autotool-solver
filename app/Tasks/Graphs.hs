@@ -30,8 +30,8 @@ run :: TaskInput -> TaskResult String
 run s = do
     desc <- readInputM s
     let t = toValue $ target desc :: G.Graph Int
-        operators = map toValue $ ops desc :: [Op () (G.Graph Int)]
-        consts = map toValue $ graphs desc :: [Op () (G.Graph Int)]
+        operators = toValue $ ops desc :: [Op () (G.Graph Int)]
+        consts = toValue $ graphs desc :: [Op () (G.Graph Int)]
         r = solve (consts ++ operators) t
     Result $ showTree r
 

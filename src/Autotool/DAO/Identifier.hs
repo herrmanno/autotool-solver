@@ -1,9 +1,11 @@
+{-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
 module Autotool.DAO.Identifier (Identifier, mkId, fromId) where
 
 import Text.ParserCombinators.ReadP (satisfy, readP_to_S)
 import Autotool.Readable (Readable(..), spaces)
+import Autotool.DAO (DAO(..))
 
 newtype Identifier = Id Char deriving (Ord,Eq)
 
@@ -24,3 +26,9 @@ instance Readable Identifier where
 
 instance Read Identifier where
     readsPrec n = readP_to_S readP
+
+instance (DAO Char) Identifier where
+    toValue = fromId
+
+instance (DAO Identifier) Char where
+    toValue = mkId

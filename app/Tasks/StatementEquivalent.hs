@@ -36,7 +36,7 @@ run :: TaskInput -> TaskResult String
 run input = do
     desc <- readInputM input
     let stm = toValue (statement desc) :: Statement
-        ops = map toValue (operators desc) :: [StatementOp]
+        ops = toValue (operators desc) :: [StatementOp]
         r = solve stm ops
     Result $ showTree (tree r)
 

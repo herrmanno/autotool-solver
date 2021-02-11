@@ -12,7 +12,7 @@ spec = do
                        , kante 1 3
                        , kante 2 3
                        ] 
-            in solve g `shouldBe` [0,3]
+            in solve g `shouldBe` Right [0,3]
         it "finds a bipartit subgraph (2)" $
             let g = mkGraph [1..10] [ kante 1 3
                        , kante 1 9
@@ -33,4 +33,4 @@ spec = do
                        , kante 7 8
                        , kante 7 10
                        ] 
-            in solve g `shouldBe` [1,2,4,6,7]
+            in solve g `shouldBe` Right [1,2,4,6,7]

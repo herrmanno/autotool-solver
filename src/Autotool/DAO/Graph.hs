@@ -7,6 +7,7 @@ module Autotool.DAO.Graph
     , Kante
     , GraphConst
     , GraphOp
+    , GraphConstraint
     ) where
 
 import Prelude hiding ((+), (*))
@@ -15,11 +16,13 @@ import Control.Applicative (Alternative((<|>)))
 import qualified Text.ParserCombinators.ReadP as P
 import qualified Data.Set as S
 import Autotool.DAO (DAO(..))
-import Autotool.DAO.Set (Set)
-import Autotool.Readable (spaces, Readable(..))
+import Autotool.DAO.Set (Set, mkSet)
+import Autotool.Readable (Readable(..), spaces, equals, openPar, closePar, number, comma)
 import qualified Autotool.Data.Graph as G
 import Autotool.Data.GraphOp ((+),(*),co)
 import Autotool.Data.LazyTree (Op, mkOp0)
+import Autotool.DAO.Identifier (Identifier, fromId)
+import Data.Bifunctor (Bifunctor(bimap))
 
 {- GRAPH -}
 
@@ -28,8 +31,17 @@ data Graph a = Graph
     , kanten :: Set (Kante a)
     } deriving (Show,Read)
 
-instance (Ord a) => (DAO (G.Graph a)) (Graph a) where
-    toValue (Graph knoten kanten) = (toValue knoten, S.map toValue (toValue kanten :: S.Set (Kante a)))
+instance (Ord a, Ord b, ((DAO b) a)) => (DAO (G.Graph b)) (Graph a) where
+    toValue (Graph knoten kanten) = (vs, es)
+        where
+            vs = toValue (toValue knoten :: S.Set a) :: S.Set b
+            es = S.map (bimap toValue toValue) (toValue (toValue kanten :: S.Set (Kante a)) :: S.Set (a,a))
+
+instance (Ord b, ((DAO b) a)) => (DAO (Graph b)) (G.Graph a) where
+    toValue (vs, es) =
+        let vs' = mkSet $ toValue (S.toList vs)
+            es' = mkSet $ S.toList $ S.map (uncurry Kante) $ S.map (bimap toValue toValue) es
+        in Graph vs' es'
 
 {- GRAPH -> KANTE -}
 
@@ -111,3 +123,39 @@ instance (Num a, Ord a) => (DAO (Op c (G.Graph a))) (GraphOp a) where
     toValue OpSum = (+)
     toValue OpJunction = (*)
     toValue OpComplement = co
+
+
+{- GRAPH CONSTRAINTS -}
+
+data GraphConstraint
+    = Vertices Int
+    | Edges Int
+    | MaxDegree Int
+    | MaxClique Int
+    | Edge Identifier Identifier
+    | Degree Identifier Int
+    | Not GraphConstraint
+    deriving (Show)
+
+instance Read GraphConstraint where
+    readsPrec _ = P.readP_to_S readP
+
+instance Readable GraphConstraint where
+    readP = readVertices <|> readEdges <|> readMaxdegree <|> readMaxclique <|> readEdge <|> readDegree <|> readNot
+        where
+            readVertices = Vertices <$> ((spaces >> P.string "vertices" >> spaces >> equals) *> number)
+            readEdges = Edges <$> ((spaces >> P.string "edges" >> spaces >> equals) *> number)
+            readMaxdegree = MaxDegree <$> ((spaces >> P.string "maxdegree" >> spaces >> equals) *> number)
+            readMaxclique = MaxClique <$> ((spaces >> P.string "maxclique" >> spaces >> equals) *> number)
+            readEdge = Edge <$> (spaces >> P.string "edge" >> spaces >> openPar *> readP) <*> (comma *> readP <* closePar)
+            readDegree = Degree <$> (spaces >> P.string "degree" >> spaces >> openPar *> readP <* closePar) <*> (equals *> number)
+            readNot = Not <$> (spaces >> P.string "Not" >> spaces >> openPar *> readP <* closePar)
+
+instance (DAO (G.GraphConstraint Char)) GraphConstraint where
+    toValue (Vertices a) = G.Vertices a
+    toValue (Edges a) = G.Edges a
+    toValue (MaxDegree a) = G.MaxDegree a
+    toValue (MaxClique a) = G.MaxClique a
+    toValue (Edge a b) = G.Edge (fromId a) (fromId b)
+    toValue (Degree a b) = G.Degree (fromId a) b
+    toValue (Not c) = G.Not (toValue c)
