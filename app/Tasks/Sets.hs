@@ -1,11 +1,11 @@
 module Tasks.Sets (task) where
 
-import Prelude hiding ((+), (-))
+import Data.Bifunctor (Bifunctor(bimap))
 import Task (Task(..), TaskInput, TaskResult(..), readInputM)
 import Autotool.DAO ( DAO(toValue) )
-import Autotool.DAO.NestedSet (NestedSet, SetOp(..))
-import Autotool.DAO.Map (Map)
-import Autotool.DAO.Identifier (mkId, Identifier)
+import qualified Autotool.DAO.NestedSet as DAO
+import qualified Autotool.DAO.Map as DAO
+import qualified Autotool.DAO.Binding as DAO
 import Autotool.Data.LazyTree (Op, mkOp0, showTree)
 import Autotool.Data.NestedSet (NSet)
 import Autotool.Solver.Sets (solve, solveP)
@@ -24,7 +24,7 @@ task = Task
         ]
     , exampleInput = show $ SetDescription
         { operators = read "[+, &, -, pow]"
-        , sets = read "[ (A, {{}, {{}}}), (B, {1, {1}, {2, {}}}) ]"
+        , sets = read "[ A = {{}, {{}}}, B = {1, {1}, {2, {}}} ]"
         , target = read "{{}, {{}, {{}}}, {{{}}}}"
         }
     }
@@ -33,13 +33,13 @@ run :: TaskInput -> TaskResult String
 run input = do
     desc <- readInputM input
     let ops = toValue (operators desc) :: [Op () (NSet Int)]
-        sops = map (\(name,set) -> mkOp0 (show name) (toValue set)) (sets desc) :: [Op () (NSet Int)]
+        sops = map (uncurry mkOp0 . bimap show toValue . DAO.toPair) (sets desc)
         t = toValue (target desc) :: NSet Int
         r = solveP (sops ++ ops) t
     Result $ showTree r
 
 data SetDescription = SetDescription
-    { operators :: [SetOp Int]
-    , sets :: [(Identifier, NestedSet Int)]
-    , target :: NestedSet Int
+    { operators :: [DAO.SetOp Int]
+    , sets :: [DAO.Binding (DAO.NestedSet Int)]
+    , target :: DAO.NestedSet Int
     } deriving (Show,Read)

@@ -2,7 +2,8 @@ module Autotool.Solver.MultiSets (solve, solveP) where
 
 import Data.List (sortOn)
 import Data.Function (on)
-import Autotool.Data.MultiSetOp ( MultiSet, MultiSetOp )
+import Autotool.Data.MultiSet ( MultiSet )
+import Autotool.Data.MultiSetOp ( MultiSetOp )
 import Autotool.Data.LazyTree ( Tree, Op, findTreeLim, searchTreeLim )
 import Autotool.Data.Parallel.LazyTree (searchTreeLimP)
 

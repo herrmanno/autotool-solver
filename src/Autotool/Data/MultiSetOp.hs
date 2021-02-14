@@ -1,4 +1,4 @@
-module Autotool.Data.MultiSetOp (MultiSet, MultiSetOp, (+), (&), (-)) where
+module Autotool.Data.MultiSetOp (MultiSetOp, (+), (&), (-)) where
 
 import Prelude hiding ((+), (-))
 import qualified Prelude ((+), (-))

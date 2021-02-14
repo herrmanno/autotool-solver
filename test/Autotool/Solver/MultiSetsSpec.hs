@@ -6,7 +6,8 @@ import Test.Hspec
 import Autotool.DAO (toValue)
 import qualified Autotool.DAO.MultiSet as DAO
 import qualified Autotool.DAO.Identifier as DAO
-import Autotool.Data.MultiSetOp (MultiSet, (&), (+), (-) )
+import Autotool.Data.MultiSet (MultiSet)
+import Autotool.Data.MultiSetOp ((&), (+), (-) )
 import Autotool.Data.LazyTree ( Tree(Node), Op, mkOp0, showTree )
 import Autotool.Solver.MultiSets (solve, solveP)
 

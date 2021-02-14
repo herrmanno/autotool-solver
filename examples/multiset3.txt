@@ -3,9 +3,9 @@ MultiSetDescription
         [ +, &, - ]
     , sets =
         [
-            ( A, {p:5, q:3, r:2, t:2} ),
-            ( B, {s:2, t:1, u:5} ),
-            ( C, {p:5, q:2, r:4, u:3} )
+            A = {p:5, q:3, r:2, t:2},
+            B = {s:2, t:1, u:5},
+            C = {p:5, q:2, r:4, u:3}
         ]
     , target =
         {s:8, t:3, u:17}

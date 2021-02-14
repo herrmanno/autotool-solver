@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4b9b181443569c5034399676685d266237eaf879e28985424bbc89113b4f9760
+-- hash: a576c3c6281db08e5e5ac1dd3b45777daae84c5337de0e10470e85bf5ce4728f
 
 name:           autotool-solver
 version:        0.1.0.0
@@ -28,6 +28,7 @@ source-repository head
 library
   exposed-modules:
       Autotool.DAO
+      Autotool.DAO.Binding
       Autotool.DAO.Function
       Autotool.DAO.Graph
       Autotool.DAO.Identifier
@@ -118,7 +119,10 @@ test-suite autotool-solver-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Autotool.DAO.BindingSpec
       Autotool.DAO.GraphSpec
+      Autotool.DAO.IdentifierSpec
+      Autotool.DAO.MultiSetSpec
       Autotool.DAO.NestedSetSpec
       Autotool.DAO.SetSpec
       Autotool.DAO.StatementSpec
