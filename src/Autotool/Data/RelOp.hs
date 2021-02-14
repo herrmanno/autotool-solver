@@ -1,27 +1,31 @@
-module Autotool.Data.RelOp ((+), (&), (-), (*)) where
+module Autotool.Data.RelOp ((+), (&), (-), (*), inverse, reflexiveClosure, transitiveClosure) where
 
 import Prelude hiding ((+), (-), (*), filter, map)
 
-import Data.Set (Set, union, difference, intersection, powerSet, foldl', empty, filter, map, insert )
-import Autotool.Data.LazyTree ( Op, mkOp2 )
 import Control.Arrow (Arrow(first))
+import Data.Set (Set, fromList, union, unions, difference, intersection, powerSet, foldl', empty, filter, map, insert )
+import Autotool.Data.LazyTree ( Op, mkOp2, mkOp1, mkOp1C )
+import qualified Autotool.Data.Relation  as R
 
-(+) :: (Ord a) => Op c (Set (a,a))
+type RelOp a = Op [a] (Set (a,a))
+
+(+) :: (Ord a) => RelOp a
 (+) = mkOp2 "+" True union
 
-(&) :: (Ord a) => Op c (Set (a,a))
+(&) :: (Ord a) => RelOp a
 (&) = mkOp2 "&" True intersection
 
-(-) :: (Ord a) => Op c (Set (a,a))
+(-) :: (Ord a) => RelOp a
 (-) = mkOp2 "-" False difference
 
-(*) :: (Ord a) => Op c (Set (a,a))
-(*) = mkOp2 "." False compose
+(*) :: (Ord a) => RelOp a
+(*) = mkOp2 "." False R.compose
 
--- TODO: this should be defined in its own file Data.Relation
-compose :: (Ord a) => Set (a,a) -> Set (a,a) -> Set (a,a)
-compose a b = foldl' f f0 a where
-    f0 = empty :: Set (a,a)
-    f acc (u,v) = let
-        b' = map (first (const u)) $ filter ((==v) . fst) b
-        in acc `union` b'
+inverse :: (Ord a) => RelOp a
+inverse = mkOp1 "inverse" R.inverse
+
+reflexiveClosure :: (Ord a) => RelOp a
+reflexiveClosure = mkOp1C "reflexive_cl" R.reflexiveClosure
+
+transitiveClosure :: (Ord a) => RelOp a
+transitiveClosure = mkOp1 "transitive_cl" R.transitiveClosure

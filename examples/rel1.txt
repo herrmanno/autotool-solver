@@ -1,5 +1,6 @@
 RelationDescription {
     operators = [+, &, -, .],
+    universe = [1,2,3,4],
     relations = [
         R = {(1 , 4) , (2 , 4) , (3 , 2) , (4 , 1)},
         S = {(1 , 4) , (2 , 2) , (2 , 3) , (4 , 4)}

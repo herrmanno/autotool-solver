@@ -19,11 +19,13 @@ task = Task
     , longDescription = "Finds an expression that evaluates to a given relation"
     , parameters =
         [ ("operators", "The operators the expression may contain")
+        , ("universe", "The universe of individuals. Needed to calcuate a relation's reflexive closure.")
         , ("sets", "The given relations the expression may contain")
         , ("target", "The value the expression should match.")
         ]
     , exampleInput = show $ RelationDescription
-        { operators = read "[+, &, -, .]"
+        { operators = read "[+, &, -, ., inverse , transitive_cl , reflexive_cl]"
+        , universe = [1,2,3,4]
         , relations = read "[ R = {(1 , 4) , (2 , 4) , (3 , 2) , (4 , 1)}, S = {(1 , 4) , (2 , 2) , (2 , 3) , (4 , 4)} ]"
         , target = read "{(1 , 1) , (1 , 4) , (2 , 1) , (2 , 2) , (2 , 4) , (4 , 1) , (4 , 4)}"
         }
@@ -32,14 +34,16 @@ task = Task
 run :: TaskInput -> TaskResult String
 run input = do
     desc <- readInputM input
-    let ops = toValue (operators desc) :: [Op () (S.Set (Int,Int))]
+    let ops = toValue (operators desc) :: [Op [Int] (S.Set (Int,Int))]
         rops = map (uncurry mkOp0 . bimap show toValue . DAO.toPair) (relations desc)
+        u = universe desc
         t = toValue (target desc) :: S.Set (Int,Int)
-        r = solveP (rops ++ ops) t
+        r = solveP (rops ++ ops) u t
     Result $ showTree r
 
 data RelationDescription = RelationDescription
     { operators :: [DAO.RelOp Int]
+    , universe :: [Int]
     , relations :: [DAO.Binding (DAO.Set (Int, Int))]
     , target :: DAO.Set (Int,Int)
     } deriving (Show,Read)

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a576c3c6281db08e5e5ac1dd3b45777daae84c5337de0e10470e85bf5ce4728f
+-- hash: dc2813b3980751b0ea4b518b2f308191e91d8542815b7fa774345aee9aea6d0d
 
 name:           autotool-solver
 version:        0.1.0.0
@@ -46,6 +46,7 @@ library
       Autotool.Data.MultiSetOp
       Autotool.Data.NestedSet
       Autotool.Data.Parallel.LazyTree
+      Autotool.Data.Relation
       Autotool.Data.RelOp
       Autotool.Data.SetOp
       Autotool.Data.StatementLogic
