@@ -1,0 +1,8 @@
+MultiSetDescription
+    { operators =
+        [ +, &, - ]
+    , sets =
+        [ ( A, { p: 1, q: 3 } ), ( B, { q: 2, r: 3 } ), ( C, { q: 1, r: 1 } ) ]
+    , target =
+        { q: 1 }
+    }

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 03973f3f314d77f0746f9f6b39c1e174d5ebfd9704a77c983530e0e782dceea6
+-- hash: 4b9b181443569c5034399676685d266237eaf879e28985424bbc89113b4f9760
 
 name:           autotool-solver
 version:        0.1.0.0
@@ -32,6 +32,7 @@ library
       Autotool.DAO.Graph
       Autotool.DAO.Identifier
       Autotool.DAO.Map
+      Autotool.DAO.MultiSet
       Autotool.DAO.NestedSet
       Autotool.DAO.Relation
       Autotool.DAO.Set
@@ -40,6 +41,8 @@ library
       Autotool.Data.Graph
       Autotool.Data.GraphOp
       Autotool.Data.LazyTree
+      Autotool.Data.MultiSet
+      Autotool.Data.MultiSetOp
       Autotool.Data.NestedSet
       Autotool.Data.Parallel.LazyTree
       Autotool.Data.RelOp
@@ -54,6 +57,7 @@ library
       Autotool.Solver.Graphs
       Autotool.Solver.Hamilton
       Autotool.Solver.Isomorphism
+      Autotool.Solver.MultiSets
       Autotool.Solver.Relations
       Autotool.Solver.Sets
       Autotool.Solver.StatementCNF
@@ -87,6 +91,7 @@ executable autotool-helper
       Tasks.Graphs
       Tasks.Hamilton
       Tasks.Isomorphism
+      Tasks.MultiSets
       Tasks.Relations
       Tasks.Sets
       Tasks.StatementCNF
@@ -124,6 +129,7 @@ test-suite autotool-solver-test
       Autotool.Solver.GraphsSpec
       Autotool.Solver.HamiltonSpec
       Autotool.Solver.IsomorphismSpec
+      Autotool.Solver.MultiSetsSpec
       Autotool.Solver.RelationsSpec
       Autotool.Solver.SetsSpec
       Autotool.Solver.StatementCNFSpec

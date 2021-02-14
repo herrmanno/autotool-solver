@@ -2,6 +2,7 @@ module App ( app, taskHelp, help ) where
 
 import Task (Task(..), describeTask, shortDescribeTask, TaskInput, TaskResult(..))
 import qualified Tasks.Sets as Set ( task )
+import qualified Tasks.MultiSets as MultiSet ( task )
 import qualified Tasks.Relations as Relation ( task )
 import qualified Tasks.Structures as Structures ( task )
 import qualified Tasks.Graphs as Graphs ( task )
@@ -28,6 +29,7 @@ tasks =
     , StatementCNF.task
     , StatementDNF.task
     , Set.task
+    , MultiSet.task
     , Relation.task
     , Graphs.task
     , Circle.task
