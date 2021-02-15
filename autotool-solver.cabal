@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: dc2813b3980751b0ea4b518b2f308191e91d8542815b7fa774345aee9aea6d0d
+-- hash: c83cfd9a642a97918095c8f33ba67c6a9897cee584243543a3883459d0c9df33
 
 name:           autotool-solver
 version:        0.1.0.0
@@ -68,6 +68,7 @@ library
       Autotool.Solver.StatementModel
       Autotool.Solver.StatementTransform
       Autotool.Solver.Structures
+      Autotool.TreeSearch
       Autotool.Util.Hash
   other-modules:
       Paths_autotool_solver

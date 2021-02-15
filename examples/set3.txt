@@ -1,4 +1,5 @@
 SetDescription {
+    mode = Parallel 10000,
     operators = [pow, &, +, -],
     sets = [
         A = {{}, {{}}},

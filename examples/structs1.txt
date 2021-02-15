@@ -1,4 +1,5 @@
 StructureDescription {
+  limit = 10000,
   structs = [
     Struktur
             { universum = mkSet

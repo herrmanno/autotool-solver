@@ -129,7 +129,8 @@ describeTask t = unlines $
     , "```"
     ]
     where
-        params = concatMap (\(k,v) -> [" - " ++ k,"\t" ++ v]) (parameters t)
+        params = concatMap (\(k,v) -> [" - " ++ k, indent v]) (parameters t)
+        indent = unlines . map ("\t"++) . lines
         showOpt = defaultOutputOptionsNoColor {
             outputOptionsCompact = True,
             outputOptionsCompactParens = False,

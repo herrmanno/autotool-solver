@@ -6,6 +6,7 @@ import Test.Hspec
 import Autotool.Data.GraphOp ( (+), (*), co )
 import Autotool.Data.Graph
 import Autotool.Data.LazyTree (showTree,  Tree(Node), Op, mkOp0 )
+import Autotool.TreeSearch (SearchMode(..))
 import Autotool.Solver.Graphs (solve)
 
 spec = do
@@ -41,7 +42,7 @@ spec = do
                 cs = map (\i -> mkOp0 ("C" ++ show i) (mkC i)) [3..5]
                 ops = ks ++ ps ++ cs ++ [co, (+), (*)]
             -- in showTree (solve ops t) `shouldBe` "(co((P3) + (co(C4)))) + (((P4) + (K3)) + ((K1) + (K1)))"
-            in showTree (solve ops t) `shouldBe` "((co(P3)) * (C4)) + (((P4) + (K3)) + ((K1) + (K1)))"
+            in showTree (solve (Parallel 10000) ops t) `shouldBe` "((co(P3)) * (C4)) + (((P4) + (K3)) + ((K1) + (K1)))"
         it "finds term w/ a target value from a set of graphs and operations on them (2)" $
             let
                 t = mkGraph [0..10] [ kante 0 6
@@ -75,4 +76,4 @@ spec = do
                 ps = map (\i -> mkOp0 ("P" ++ show i) (mkP i)) [3..5]
                 cs = map (\i -> mkOp0 ("C" ++ show i) (mkC i)) [3..5]
                 ops = ks ++ ps ++ cs ++ [co, (+), (*)]
-            in showTree (solve ops t) `shouldBe` "(co(((K1) * (K5)) + (C4))) + (K1)"
+            in showTree (solve (Serial 200000) ops t) `shouldBe` "(co(((K1) * (K5)) + (C4))) + (K1)"

@@ -9,7 +9,8 @@ import qualified Autotool.DAO.Identifier as DAO
 import Autotool.Data.MultiSet (MultiSet)
 import Autotool.Data.MultiSetOp ((&), (+), (-) )
 import Autotool.Data.LazyTree ( Tree(Node), Op, mkOp0, showTree )
-import Autotool.Solver.MultiSets (solve, solveP)
+import Autotool.TreeSearch (SearchMode(..))
+import Autotool.Solver.MultiSets (solve)
 
 spec = do
     describe "multisets" $ do
@@ -21,7 +22,7 @@ spec = do
                 r = (toValue (read "{q:1}" :: DAO.MultiSet DAO.Identifier) :: MultiSet Char)
                 ops = [(-), (+), (&), a, b, c]
                 result = "A & C"
-            in showTree (solveP ops r) `shouldBe` result
+            in showTree (solve (Parallel 10000) ops r) `shouldBe` result
         it "finds term w/ a target value from a set of multisets and operations on them (2)" $
             let 
                 a = mkOp0 "A" (toValue (read "{q:3, t:3, u:1}" :: DAO.MultiSet DAO.Identifier) :: MultiSet Char)
@@ -29,7 +30,7 @@ spec = do
                 r = (toValue (read "{p:15, q:3, r:9, s:15, t:9, u:1}" :: DAO.MultiSet DAO.Identifier) :: MultiSet Char)
                 ops = [(-), (+), (&), a, b]
                 result = "((A + B) + (B + B)) - (A & B)"
-            in showTree (solveP ops r) `shouldBe` result
+            in showTree (solve (Parallel 100000) ops r) `shouldBe` result
         it "finds term w/ a target value from a set of multisets and operations on them (3)" $
             let 
                 a = mkOp0 "A" (toValue (read "{p:5, q:3, r:2, t:2}" :: DAO.MultiSet DAO.Identifier) :: MultiSet Char)
@@ -38,4 +39,4 @@ spec = do
                 r = (toValue (read "{s:8, t:3, u:17}" :: DAO.MultiSet DAO.Identifier) :: MultiSet Char)
                 ops = [(-), (+), (&), a, b, c]
                 result = "(B + B) + ((B - A) + (B - C))"
-            in showTree (solveP ops r) `shouldBe` result
+            in showTree (solve (Parallel 10000) ops r) `shouldBe` result

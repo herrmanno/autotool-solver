@@ -3,9 +3,6 @@ module Autotool.Solver.GraphParam (solve) where
 
 import qualified Data.Set as S
 import Autotool.Data.Graph ( Graph, GraphConstraint(Vertices, Edges, Edge, Not), satisfiesConstraint, insertEdge, breaksConstraint )
-import Data.Foldable (find)
-import Control.Monad (msum)
-import Debug.Trace (trace, traceShowId, traceShow)
 import Data.Maybe (mapMaybe, listToMaybe)
 
 

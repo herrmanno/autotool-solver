@@ -1,4 +1,5 @@
 RelationDescription {
+    mode = Parallel 1000,
     operators = [+, &, -, .],
     universe = [1,2,3],
     relations = [

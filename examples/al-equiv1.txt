@@ -1,4 +1,5 @@
 StatementEquivalentDescription {
+    mode = Parallel 250000,
     statement = (p <-> q) -> r && q,
     operators = [!, ||, &&]
 }

@@ -7,7 +7,8 @@ import Autotool.DAO (toValue)
 import qualified Autotool.DAO.Set as DAO
 import Autotool.Data.RelOp ( (&), (+), (-), (*) )
 import Autotool.Data.LazyTree ( Tree(Node), Op, mkOp0 )
-import Autotool.Solver.Relations (solve, solveP)
+import Autotool.TreeSearch (SearchMode(..))
+import Autotool.Solver.Relations (solve)
 
 spec = do
     describe "relations" $ do
@@ -25,7 +26,7 @@ spec = do
                         ],
                         Node r []
                     ]
-            in solve ops [1,2,3] t `shouldBe` result
+            in solve (Serial 10000) ops [1,2,3] t `shouldBe` result
         it "finds term w/ a target value from a set of relations and operations on them (2)" $
             let
                 r = mkOp0 "r" $ readSet "{(1 , 4) , (2 , 4) , (3 , 2) , (4 , 1)}"
@@ -46,7 +47,7 @@ spec = do
                             ]
                         ]
                     ]
-            in solve ops [1,2,3,4] t `shouldBe` result
+            in solve (Serial 250000) ops [1,2,3,4] t `shouldBe` result
         it "finds term w/ a target value from a set of relations and operations on them in parallel (1)" $
             let
                 r = mkOp0 "r" $ readSet "{(1,1),(1,2),(2,1)}"
@@ -61,7 +62,7 @@ spec = do
                         ],
                         Node r []
                     ]
-            in solveP ops [1,2,3] t `shouldBe` result
+            in solve (Parallel 10000) ops [1,2,3] t `shouldBe` result
         it "finds term w/ a target value from a set of relations and operations on them in parallel (2)" $
             let
                 r = mkOp0 "r" $ readSet "{(1 , 4) , (2 , 4) , (3 , 2) , (4 , 1)}"
@@ -79,7 +80,7 @@ spec = do
                             Node r []
                         ]
                     ]
-            in solveP ops [1,2,4]  t `shouldBe` result
+            in solve (Parallel 10000) ops [1,2,4]  t `shouldBe` result
 
 readSet :: String -> Set(Int,Int)
 readSet s = let dao = read s :: DAO.Set (Int,Int) in toValue dao

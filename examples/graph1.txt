@@ -1,4 +1,5 @@
 GraphsDescription {
+    mode = Parallel 10000,
     target = Graph
         { knoten = mkSet
                        [ 0

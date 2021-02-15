@@ -4,8 +4,9 @@ import Task (Task(..), TaskInput, TaskResult(..), readInputM)
 import Autotool.DAO (toValue)
 import qualified Autotool.DAO.Statement as DAO
 import Autotool.Data.StatementLogic (Statement(..), StatementOp)
-import Autotool.Solver.StatementEquivalent (solve)
 import Autotool.Data.LazyTree ( showTree )
+import Autotool.TreeSearch (SearchMode(..), evalModeDescription)
+import Autotool.Solver.StatementEquivalent (solve)
 
 
 task :: Task
@@ -25,9 +26,11 @@ task = Task
     , parameters =
         [ ("statement", "The statement (formula) to find an equivalent form for")
         , ("operators", "The operators the target statement may contain")
+        , ("mode", evalModeDescription)
         ]
     , exampleInput = show $ StatementEquivalentDescription
-        { statement = read "(p <-> q) -> r && q"
+        { mode = Parallel 250000
+        , statement = read "(p <-> q) -> r && q"
         , operators = read "[!, ||, &&]"
         }
     }
@@ -37,10 +40,12 @@ run input = do
     desc <- readInputM input
     let stm = toValue (statement desc) :: Statement
         ops = toValue (operators desc) :: [StatementOp]
-        r = solve stm ops
+        m = mode desc
+        r = solve m stm ops
     Result $ showTree (tree r)
 
 data StatementEquivalentDescription = StatementEquivalentDescription
-    { statement :: DAO.Statement
+    { mode :: SearchMode
+    , statement :: DAO.Statement
     , operators :: [DAO.StatementOp]
     } deriving (Show,Read)

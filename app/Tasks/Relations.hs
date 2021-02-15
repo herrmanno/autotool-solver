@@ -8,7 +8,8 @@ import qualified Autotool.DAO.Set as DAO
 import qualified Autotool.DAO.Relation as DAO
 import qualified Autotool.DAO.Binding as DAO
 import Autotool.Data.LazyTree (Op, mkOp0, showTree)
-import Autotool.Solver.Relations (solveP)
+import Autotool.Solver.Relations (solve)
+import Autotool.TreeSearch (SearchMode(..), evalModeDescription)
 
 task :: Task
 task = Task
@@ -22,9 +23,11 @@ task = Task
         , ("universe", "The universe of individuals. Needed to calcuate a relation's reflexive closure.")
         , ("sets", "The given relations the expression may contain")
         , ("target", "The value the expression should match.")
+        , ("mode", evalModeDescription)
         ]
     , exampleInput = show $ RelationDescription
-        { operators = read "[+, &, -, ., inverse , transitive_cl , reflexive_cl]"
+        { mode = Parallel 250000
+        , operators = read "[+, &, -, ., inverse , transitive_cl , reflexive_cl]"
         , universe = [1,2,3,4]
         , relations = read "[ R = {(1 , 4) , (2 , 4) , (3 , 2) , (4 , 1)}, S = {(1 , 4) , (2 , 2) , (2 , 3) , (4 , 4)} ]"
         , target = read "{(1 , 1) , (1 , 4) , (2 , 1) , (2 , 2) , (2 , 4) , (4 , 1) , (4 , 4)}"
@@ -38,11 +41,13 @@ run input = do
         rops = map (uncurry mkOp0 . bimap show toValue . DAO.toPair) (relations desc)
         u = universe desc
         t = toValue (target desc) :: S.Set (Int,Int)
-        r = solveP (rops ++ ops) u t
+        m = mode desc
+        r = solve m (rops ++ ops) u t
     Result $ showTree r
 
 data RelationDescription = RelationDescription
-    { operators :: [DAO.RelOp Int]
+    { mode :: SearchMode
+    , operators :: [DAO.RelOp Int]
     , universe :: [Int]
     , relations :: [DAO.Binding (DAO.Set (Int, Int))]
     , target :: DAO.Set (Int,Int)

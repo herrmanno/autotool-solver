@@ -9,7 +9,8 @@ import qualified Autotool.DAO.Binding as DAO
 import Autotool.Data.LazyTree (Op, mkOp0, showTree)
 import Autotool.Data.MultiSet (MultiSet)
 import Autotool.Data.MultiSetOp (MultiSetOp)
-import Autotool.Solver.MultiSets (solve, solveP)
+import Autotool.Solver.MultiSets (solve)
+import Autotool.TreeSearch (SearchMode(..), evalModeDescription)
 
 task :: Task
 task = Task
@@ -22,9 +23,11 @@ task = Task
         [ ("operators", "The operators the expression may contain")
         , ("sets", "The given sets the expression may contain")
         , ("target", "The value the expression should match.")
+        , ("mode", evalModeDescription)
         ]
     , exampleInput = show $ MultiSetDescription
-        { operators = read "[+, &, -]"
+        { mode = Parallel 250000
+        , operators = read "[+, &, -]"
         , sets = read "[ A = {p:1, q:3}, B = {q:2, r:3}, C = {q:1, r:1} ]"
         , target = read "{q:1}"
         }
@@ -36,11 +39,13 @@ run input = do
     let ops = toValue (operators desc) :: [MultiSetOp () Char]
         sops = map (uncurry mkOp0 . bimap show toValue . DAO.toPair) (sets desc)
         t = toValue (target desc) :: MultiSet Char
-        r = solveP (sops ++ ops) t
+        m = mode desc
+        r = solve m (sops ++ ops) t
     Result $ showTree r
 
 data MultiSetDescription = MultiSetDescription
-    { operators :: [DAO.MultiSetOp]
+    { mode :: SearchMode
+    , operators :: [DAO.MultiSetOp]
     , sets :: [DAO.Binding (DAO.MultiSet DAO.Identifier)]
     , target :: DAO.MultiSet DAO.Identifier
     } deriving (Show,Read)

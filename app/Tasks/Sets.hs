@@ -7,8 +7,9 @@ import qualified Autotool.DAO.NestedSet as DAO
 import qualified Autotool.DAO.Map as DAO
 import qualified Autotool.DAO.Binding as DAO
 import Autotool.Data.LazyTree (Op, mkOp0, showTree)
+import Autotool.TreeSearch (SearchMode(..), evalModeDescription)
 import Autotool.Data.NestedSet (NSet)
-import Autotool.Solver.Sets (solve, solveP)
+import Autotool.Solver.Sets (solve)
 
 task :: Task
 task = Task
@@ -21,9 +22,11 @@ task = Task
         [ ("operators", "The operators the expression may contain")
         , ("sets", "The given sets the expression may contain")
         , ("target", "The value the expression should match.")
+        , ("mode", evalModeDescription)
         ]
     , exampleInput = show $ SetDescription
-        { operators = read "[+, &, -, pow]"
+        { mode = Parallel 250000
+        , operators = read "[+, &, -, pow]"
         , sets = read "[ A = {{}, {{}}}, B = {1, {1}, {2, {}}} ]"
         , target = read "{{}, {{}, {{}}}, {{{}}}}"
         }
@@ -35,11 +38,13 @@ run input = do
     let ops = toValue (operators desc) :: [Op () (NSet Int)]
         sops = map (uncurry mkOp0 . bimap show toValue . DAO.toPair) (sets desc)
         t = toValue (target desc) :: NSet Int
-        r = solveP (sops ++ ops) t
+        m = mode desc
+        r = solve m (sops ++ ops) t
     Result $ showTree r
 
 data SetDescription = SetDescription
-    { operators :: [DAO.SetOp Int]
+    { mode :: SearchMode
+    , operators :: [DAO.SetOp Int]
     , sets :: [DAO.Binding (DAO.NestedSet Int)]
     , target :: DAO.NestedSet Int
     } deriving (Show,Read)

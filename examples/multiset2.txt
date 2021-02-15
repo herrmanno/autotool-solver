@@ -1,5 +1,6 @@
 MultiSetDescription
-    { operators =
+    { mode = Parallel 1000
+    , operators =
         [ +, &, - ]
     , sets =
         [
