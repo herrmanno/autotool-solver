@@ -1,7 +1,5 @@
 module Autotool.Solver.Sets (solve) where
 
-import Data.List (sortOn)
-import Data.Function (on)
 import Autotool.Data.NestedSet ( NSet )
 import Autotool.TreeSearch (SearchMode, searchTree, Tree, Op)
 

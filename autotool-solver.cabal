@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 05b88d3ddd364505bc94af5416b2c3bcb358577bf42f0efa85dc18e638316977
+-- hash: 58bfb1f8aa528b9a2553a81c058159c1f6ff6c99169b67813f95de4d2aa21822
 
 name:           autotool-solver
 version:        0.1.0.0
@@ -148,7 +148,7 @@ test-suite autotool-solver-test
       Paths_autotool_solver
   hs-source-dirs:
       test
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -O2 -threaded -rtsopts -with-rtsopts=-N -Wunused-imports
   build-depends:
       autotool-solver
     , base >=4.7 && <5

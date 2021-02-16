@@ -5,12 +5,8 @@ import Autotool.Data.StatementLogic
       , StatementOp
       , universe
       , equiv
-      , truthTable
       , var
       )
-import Autotool.Data.LazyTree (showTree, evalTree')
-import Autotool.Data.Parallel.LazyTree (searchTreeUnevaluatedLimP)
-import Debug.Trace (traceShow, traceShowId)
 import Autotool.TreeSearch (SearchMode, searchTreeUnevaluated)
 
 

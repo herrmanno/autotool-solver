@@ -2,10 +2,9 @@
 
 module Autotool.Solver.Structures (solve) where
 
-import Data.List (nub, find, sortOn)
+import Data.List (nub, find)
 
-import qualified Data.Map as M
-import Autotool.Data.LazyTree (isOp0,  Tree, Op(..), findTreeLim,evalTree,  trees )
+import Autotool.Data.LazyTree (Tree, Op(..),evalTree,  trees )
 import Autotool.DAO ( toValue )
 import Autotool.DAO.Structure ( Struktur(..) )
 

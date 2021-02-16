@@ -6,7 +6,7 @@ import Autotool.DAO ( DAO(toValue) )
 import qualified Autotool.DAO.MultiSet as DAO
 import qualified Autotool.DAO.Identifier as DAO
 import qualified Autotool.DAO.Binding as DAO
-import Autotool.Data.LazyTree (Op, mkOp0, showTree)
+import Autotool.Data.LazyTree (mkOp0, showTree)
 import Autotool.Data.MultiSet (MultiSet)
 import Autotool.Data.MultiSetOp (MultiSetOp)
 import Autotool.Solver.MultiSets (solve)

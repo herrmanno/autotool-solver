@@ -1,7 +1,5 @@
 module Autotool.Solver.Relations (solve) where
 
-import Data.List (sortOn)
-import Data.Function (on)
 import Data.Set ( Set )
 import Autotool.TreeSearch (SearchMode,Tree, Op, searchTree)
 

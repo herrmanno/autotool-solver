@@ -6,7 +6,6 @@ import Data.Tree (Tree(Node))
 import Autotool.Data.StatementLogic
       ( Statement(..)
       , StatementOp
-      , Interpretation
       , true
       , false
       , var
@@ -19,8 +18,6 @@ import Autotool.Data.StatementLogic
       , reduce
       )
 
-import Autotool.DAO (toValue)
-import qualified Autotool.DAO.Statement as DAO
 
 solve :: Statement -> Statement
 solve = toCNF

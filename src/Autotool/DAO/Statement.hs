@@ -4,7 +4,6 @@
 module Autotool.DAO.Statement (Statement, StatementOp) where
 
 import Prelude hiding ((&&), (||))
-import Text.ParserCombinators.ReadP (ReadP)
 import qualified Text.ParserCombinators.ReadP as P
 import Control.Applicative (Alternative((<|>)))
 import Data.Functor (($>))

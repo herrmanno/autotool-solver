@@ -6,7 +6,7 @@ module Autotool.DAO.Map (Map, listToFM, mapToFM) where
 import qualified Data.Map as M
 import Data.List (intercalate)
 import qualified Text.ParserCombinators.ReadP as P
-import Text.ParserCombinators.ReadP ((+++), ReadP)
+import Text.ParserCombinators.ReadP (ReadP)
 import Autotool.DAO (DAO(..))
 import Autotool.Readable (Readable(..), spaces)
 

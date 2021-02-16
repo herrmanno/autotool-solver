@@ -1,7 +1,6 @@
 module Autotool.DAO.NestedSetSpec (spec) where
 
 import Test.Hspec ( describe, it, shouldBe )
-import qualified Data.Set as S
 import Autotool.DAO (toValue)
 import Autotool.DAO.NestedSet ( NestedSet )
 import Autotool.Data.NestedSet (NSet, ø, (+.), (&.))

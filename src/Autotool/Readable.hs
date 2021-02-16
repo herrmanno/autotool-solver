@@ -13,7 +13,6 @@ import Text.ParserCombinators.ReadP
     , between
     , munch1
     , sepBy
-    , satisfy
     )
 import Data.Char (isDigit)
 

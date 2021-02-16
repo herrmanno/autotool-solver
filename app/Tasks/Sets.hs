@@ -4,7 +4,6 @@ import Data.Bifunctor (Bifunctor(bimap))
 import Task (Task(..), TaskInput, TaskResult(..), readInputM)
 import Autotool.DAO ( DAO(toValue) )
 import qualified Autotool.DAO.NestedSet as DAO
-import qualified Autotool.DAO.Map as DAO
 import qualified Autotool.DAO.Binding as DAO
 import Autotool.Data.LazyTree (Op, mkOp0, showTree)
 import Autotool.TreeSearch (SearchMode(..), evalModeDescription)

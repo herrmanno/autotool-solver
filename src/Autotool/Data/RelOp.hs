@@ -2,8 +2,7 @@ module Autotool.Data.RelOp ((+), (&), (-), (*), inverse, reflexiveClosure, trans
 
 import Prelude hiding ((+), (-), (*), filter, map)
 
-import Control.Arrow (Arrow(first))
-import Data.Set (Set, fromList, union, unions, difference, intersection, powerSet, foldl', empty, filter, map, insert )
+import Data.Set (Set, union, difference, intersection )
 import Autotool.Data.LazyTree ( Op, mkOp2, mkOp1, mkOp1C )
 import qualified Autotool.Data.Relation  as R
 

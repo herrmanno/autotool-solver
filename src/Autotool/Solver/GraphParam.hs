@@ -2,7 +2,7 @@
 module Autotool.Solver.GraphParam (solve) where
 
 import qualified Data.Set as S
-import Autotool.Data.Graph ( Graph, GraphConstraint(Vertices, Edges, Edge, Not), satisfiesConstraint, insertEdge, breaksConstraint )
+import Autotool.Data.Graph ( Graph, GraphConstraint(Edge, Not), satisfiesConstraint, insertEdge, breaksConstraint )
 import Data.Maybe (mapMaybe, listToMaybe)
 
 

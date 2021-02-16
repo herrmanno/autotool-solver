@@ -3,8 +3,7 @@ module Autotool.Data.Relation (compose, inverse, reflexiveClosure, transitiveClo
 import Prelude hiding ((+), (-), (*), filter, map)
 
 import Data.List (unfoldr)
-import Data.Set (Set, fromList, union, unions, difference, intersection, powerSet, foldl', empty, filter, map, insert )
-import Autotool.Data.LazyTree ( Op, mkOp2, mkOp1, mkOp1C )
+import Data.Set (Set, fromList, union, unions, foldl', empty, filter, map )
 import Control.Arrow (Arrow(first))
 
 type Relation a = Set (a,a)

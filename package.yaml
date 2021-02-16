@@ -49,9 +49,11 @@ tests:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
+    - -O2
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
+    - -Wunused-imports
     dependencies:
     - autotool-solver
     - hspec

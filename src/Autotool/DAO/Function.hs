@@ -4,7 +4,7 @@ module Autotool.DAO.Function ( Function(..), maplet ) where
 
 import qualified Data.Set as S
 import qualified Data.Map as M
-import Text.ParserCombinators.ReadP ( (+++), ReadP, readP_to_S, readS_to_P)
+import Text.ParserCombinators.ReadP ( (+++), ReadP, readP_to_S)
 import Autotool.Readable ( Readable(readP) )
 import Autotool.DAO (toValue)
 import Autotool.DAO.Set ( Set )

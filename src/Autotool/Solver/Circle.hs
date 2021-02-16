@@ -1,9 +1,8 @@
 module Autotool.Solver.Circle (solve) where
 
-import Data.Set (delete, toList, member, empty, size)
-import Control.Monad (guard)
-import Data.List (notElem, permutations, permutations, subsequences)
-import Autotool.Data.Graph (Graph, mkGraph, kante, subgraph, isCircle)
+import Data.Set (toList)
+import Data.List (subsequences)
+import Autotool.Data.Graph (Graph, subgraph, isCircle)
 
 
 solve :: (Eq a, Ord a) => Int -> Graph a -> [[a]]

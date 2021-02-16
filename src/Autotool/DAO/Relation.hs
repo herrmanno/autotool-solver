@@ -7,7 +7,6 @@ module Autotool.DAO.Relation (RelOp) where
 import Prelude hiding ((+), (-), (&), (*))
 import Data.Set ( Set )
 import qualified Text.ParserCombinators.ReadP as P
-import Text.ParserCombinators.ReadP (ReadP)
 import Control.Applicative (Alternative((<|>)))
 import Data.Functor (($>))
 import Autotool.DAO (DAO(..))

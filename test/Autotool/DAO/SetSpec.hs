@@ -3,7 +3,6 @@ module Autotool.DAO.SetSpec (spec) where
 import Test.Hspec
 import qualified Data.Set as S
 import Autotool.DAO
-import Autotool.Readable
 import Autotool.DAO.Set
 
 spec = do

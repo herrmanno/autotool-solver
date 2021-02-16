@@ -8,8 +8,6 @@
 
 module Autotool.Result where
 
-import Control.Applicative (Alternative(..))
-import Data.Kind (Type)
 
 type family RT t a where
     RT 'Empty a = a

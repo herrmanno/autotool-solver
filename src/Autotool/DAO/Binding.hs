@@ -3,11 +3,10 @@
 
 module Autotool.DAO.Binding (Binding, toPair, fromPair) where
 
-import Text.ParserCombinators.ReadP (satisfy, readP_to_S)
+import Text.ParserCombinators.ReadP (readP_to_S)
 import Autotool.Readable (Readable(..), spacedString)
 import Autotool.DAO (DAO(..))
 import qualified Autotool.DAO.Identifier as DAO
-import Autotool.DAO.Identifier (fromId)
 
 data Binding a = Binding DAO.Identifier a deriving (Ord,Eq)
 

@@ -4,10 +4,8 @@
 module Autotool.DAO.Structure ( Struktur(..) ) where
 
 import qualified Data.Map as M
-import qualified Text.ParserCombinators.ReadP as P
 import Autotool.Data.LazyTree (Op, mkOp0, mkOp1, mkOp2)
 import Autotool.DAO (DAO(..))
-import Autotool.Readable (Readable(..))
 import Autotool.DAO.Set (Set)
 import Autotool.DAO.Map (Map)
 import Autotool.DAO.Function (Function(..), maplet)

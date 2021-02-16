@@ -1,9 +1,8 @@
 module Autotool.Solver.Hamilton (solve) where
 
-import Data.Set (delete, toList, member, empty, size)
+import Data.Set (delete, toList, member, size)
 import Control.Monad (guard)
-import Data.List (notElem,permutations, permutations)
-import Autotool.Data.Graph (Graph, mkGraph, kante)
+import Autotool.Data.Graph (Graph)
 
 solve :: (Eq a, Ord a, Show a) => Graph a -> [a]
 solve g@(vs,_) = take (size vs) $ go g [] where

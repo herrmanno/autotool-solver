@@ -4,7 +4,7 @@ import Task (Task(..), TaskInput, TaskResult(..), readInputM)
 import Autotool.Data.LazyTree (showTree)
 import Autotool.DAO (toValue)
 import qualified Autotool.DAO.Statement as DAO
-import Autotool.Data.StatementLogic (Statement(..), Interpretation)
+import Autotool.Data.StatementLogic (Statement(..))
 import Autotool.Solver.StatementDNF (solve)
 
 

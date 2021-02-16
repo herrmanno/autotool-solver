@@ -4,10 +4,7 @@ module Autotool.Solver.ColorGraph (solve) where
 
 import Data.Map (Map, (!), fromList, insert)
 import Data.Set (toList)
-import qualified Data.Set as S
-import Control.Monad (guard)
-import Data.List (notElem,permutations, permutations)
-import Autotool.Data.Graph (Graph, mkGraph, kante, neighbours, Color(..))
+import Autotool.Data.Graph (Graph, neighbours)
 
 allColorings ::
             (Ord a) => [a]          -- ^ vertices

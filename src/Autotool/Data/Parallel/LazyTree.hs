@@ -1,8 +1,8 @@
 {-# LANGUAGE FlexibleInstances #-}
 module Autotool.Data.Parallel.LazyTree (searchTreeLimP, searchTreeUnevaluatedLimP) where
 
-import Autotool.Data.LazyTree (evalTree', Tree, Op, isOp0, searchTreeLim, searchTreeUnevaluatedLim )
-import Data.List (find,  permutations, concatMap, )
+import Autotool.Data.LazyTree (evalTree', Tree, Op, isOp0, searchTreeUnevaluatedLim )
+import Data.List (permutations, )
 import Control.Parallel.Strategies (using, parList, rdeepseq)
 import Control.DeepSeq (NFData(..))
 import Control.Monad (msum)

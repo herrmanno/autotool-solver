@@ -1,11 +1,8 @@
 module Autotool.DAO.MultiSetSpec (spec) where
 
 import Test.Hspec
--- import qualified Data.MultiSet as MS
-import Autotool.DAO (toValue)
 import qualified Autotool.DAO.Identifier as DAO
 import qualified Autotool.DAO.MultiSet as DAO
--- import Autotool.Readable
 
 spec = do
     describe "DAO.MultiSet" $ do

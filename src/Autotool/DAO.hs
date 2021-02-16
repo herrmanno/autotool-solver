@@ -5,7 +5,6 @@
 module Autotool.DAO (DAO(..)) where
 
 
-import GHC.Exts (IsList (Item))
 import Data.Set (Set)
 import qualified Data.Set as S (map)
 class DAO a b where

@@ -3,8 +3,7 @@ module Autotool.Solver.Graphs (solve) where
 import Prelude hiding ((+))
 import Autotool.Data.GraphOp ((+))
 import Autotool.Data.Graph ( Graph, vertices, normalize, similiar, disconnectedSubgraphs )
-import Autotool.Data.LazyTree (searchTreeLim, searchTreeUnevaluatedLim, evalTree', showTree, Tree, Op, mkOp0)
-import Autotool.Data.Parallel.LazyTree (searchTreeUnevaluatedLimP)
+import Autotool.Data.LazyTree (evalTree', showTree, Tree, Op, mkOp0)
 import Autotool.TreeSearch (SearchMode, searchTreeUnevaluated, searchTree)
 
 

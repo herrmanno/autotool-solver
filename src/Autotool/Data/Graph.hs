@@ -35,7 +35,7 @@ module Autotool.Data.Graph
 
 import qualified Data.Map as M
 import qualified Data.IntMap as IM
-import Data.Set (fromList, Set, toList, (\\), notMember)
+import Data.Set (fromList, Set, toList, notMember)
 import qualified Data.Set as S
 import Data.Maybe (mapMaybe)
 import Data.List (find, permutations)

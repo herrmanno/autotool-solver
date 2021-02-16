@@ -1,4 +1,6 @@
 {-# LANGUAGE AllowAmbiguousTypes #-}
+{-# OPTIONS_GHC -Wno-unused-imports #-}
+
 module Autotool.Data.StatementLogic
     (
     -- * Statement and other types
@@ -37,8 +39,7 @@ import qualified Prelude as Pre ((&&), (||))
 import qualified Data.Map as M
 import Data.Tree ( Tree(Node), foldTree )
 import Autotool.Data.LazyTree (evalTree', isOp0, Op, mkOp0, mkOp0C, mkOp1, mkOp2)
-import Data.List (sort, find, nub)
-import Data.Function (on)
+import Data.List (sort, nub)
 
 -- * Statement and other types
 

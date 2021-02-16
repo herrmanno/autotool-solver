@@ -30,8 +30,7 @@ module Autotool.Data.LazyTree
     ) where
 
 import Data.Tree (foldTree, levels, Tree(Node) )
-import Debug.Trace (traceShow, traceShowId)
-import Data.List (sort, subsequences, find, notElem, )
+import Data.List (find, )
 
 data Op c a = Op0 String (c -> a)| Op1 String (c -> a -> a) | Op2 String Bool (c -> a -> a -> a)
 

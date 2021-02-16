@@ -11,7 +11,7 @@ import Data.List (intercalate)
 import qualified Data.Map as M
 import qualified Text.ParserCombinators.ReadP as P
 import Autotool.DAO (DAO(..))
-import Autotool.Readable (Readable(..), comma, spaces, openBracket, closeBracket, openBracelet, closeBracelet, number, spacedString)
+import Autotool.Readable (Readable(..), comma, spaces, openBracelet, closeBracelet, number, spacedString)
 import Autotool.Data.LazyTree (Op)
 import qualified Autotool.Data.MultiSet as MS (MultiSet)
 import qualified Autotool.Data.MultiSetOp as MS ((+), (&), (-))

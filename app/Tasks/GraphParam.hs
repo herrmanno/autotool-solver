@@ -1,7 +1,7 @@
 module Tasks.GraphParam (task) where
 
 
-import Task (Task(..), TaskInput, TaskResult(..), readInputM, fromEither)
+import Task (Task(..), TaskInput, TaskResult(..), readInputM)
 import Autotool.DAO ( DAO(toValue) )
 import Autotool.DAO.Graph as DAO ( GraphConstraint, Graph )
 import Autotool.DAO.Identifier as DAO (Identifier)

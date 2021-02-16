@@ -2,7 +2,7 @@ module Autotool.Data.SetOp ((+), (&), (-), pow) where
 
 import Prelude hiding ((+), (-))
 
-import Data.Set (Set, union, difference, intersection,)
+import Data.Set (union, difference, intersection,)
 import Autotool.Data.NestedSet (NSet, powerSet)
 import Autotool.Data.LazyTree ( Op, mkOp1, mkOp2 )
 
