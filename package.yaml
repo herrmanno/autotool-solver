@@ -26,6 +26,7 @@ dependencies:
 - parallel >= 3.2.2.0 && < 4
 - deepseq >= 1.1.0.2 && < 2
 - pretty-simple >= 4.0.0.0 && < 5
+- file-embed >= 0.0.13.0 && < 1
 
 library:
   source-dirs: src
@@ -39,6 +40,7 @@ executables:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
+    - -Wunused-imports
     dependencies:
     - autotool-solver
 

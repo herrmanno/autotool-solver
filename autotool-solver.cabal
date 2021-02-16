@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c83cfd9a642a97918095c8f33ba67c6a9897cee584243543a3883459d0c9df33
+-- hash: 05b88d3ddd364505bc94af5416b2c3bcb358577bf42f0efa85dc18e638316977
 
 name:           autotool-solver
 version:        0.1.0.0
@@ -78,6 +78,7 @@ library
       base >=4.7 && <5
     , containers >=0.5.6 && <6
     , deepseq >=1.1.0.2 && <2
+    , file-embed >=0.0.13.0 && <1
     , parallel >=3.2.2.0 && <4
     , pretty-simple >=4.0.0.0 && <5
     , text
@@ -106,12 +107,13 @@ executable autotool-helper
       Paths_autotool_solver
   hs-source-dirs:
       app
-  ghc-options: -O2 -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -O2 -threaded -rtsopts -with-rtsopts=-N -Wunused-imports
   build-depends:
       autotool-solver
     , base >=4.7 && <5
     , containers >=0.5.6 && <6
     , deepseq >=1.1.0.2 && <2
+    , file-embed >=0.0.13.0 && <1
     , parallel >=3.2.2.0 && <4
     , pretty-simple >=4.0.0.0 && <5
     , text
@@ -152,6 +154,7 @@ test-suite autotool-solver-test
     , base >=4.7 && <5
     , containers >=0.5.6 && <6
     , deepseq >=1.1.0.2 && <2
+    , file-embed >=0.0.13.0 && <1
     , hspec
     , parallel >=3.2.2.0 && <4
     , pretty-simple >=4.0.0.0 && <5

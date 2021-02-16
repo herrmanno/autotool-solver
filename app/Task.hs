@@ -17,9 +17,8 @@ module Task
 
 import Text.Read (readEither)
 import Data.Text.Lazy (unpack)
-import Text.Pretty.Simple ( pShow, pShowOpt, defaultOutputOptionsNoColor, OutputOptions(..), pStringOpt )
+import Text.Pretty.Simple ( defaultOutputOptionsNoColor, OutputOptions(..), pStringOpt )
 import Control.Applicative (Alternative(..))
-import Control.Monad (join)
 
 data TaskResult a = Error String | Result a  | Results [a] --  | WithWarnings [String] (TaskResult a)
 
@@ -110,13 +109,13 @@ describeTask :: Task -> String
 describeTask t = unlines $
     [ ""
     , "TASK NAME"
-    , "\t" ++ name t
+    , "  " ++ name t
     , ""
     , "AUTOTOOL NAME"
-    , "\t" ++ autotoolName t
+    , "  " ++ autotoolName t
     , ""
     , "DESCRIPTION"
-    , unlines $ map ("\t"++) $ lines (longDescription t)
+    , unlines $ map ("  "++) $ lines (longDescription t)
     , ""
     , "PARAMETERS"
     ]
@@ -130,7 +129,7 @@ describeTask t = unlines $
     ]
     where
         params = concatMap (\(k,v) -> [" - " ++ k, indent v]) (parameters t)
-        indent = unlines . map ("\t"++) . lines
+        indent = unlines . map ("    "++) . lines
         showOpt = defaultOutputOptionsNoColor {
             outputOptionsCompact = True,
             outputOptionsCompactParens = False,

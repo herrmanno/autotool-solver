@@ -1,4 +1,4 @@
-module App ( app, taskHelp, help ) where
+module App ( app, taskHelp, taskTypeDescriptions ) where
 
 import Task (Task(..), describeTask, shortDescribeTask, TaskInput, TaskResult(..))
 import qualified Tasks.Sets as Set ( task )
@@ -51,15 +51,18 @@ taskHelp t = case findTask t of
     (Just t) -> describeTask t
     _        -> unknownTasktype t
 
-help :: String
-help = unlines $
-    [ "USAGE"
-    , "  <task> <task description file>"
-    , "  help <task>"
-    , "  help"
-    , ""
-    , "TASK TYPES"
-    ] ++ map (("  "++) . shortDescribeTask) tasks
+taskTypeDescriptions :: [String]
+taskTypeDescriptions = map shortDescribeTask tasks
+
+-- help :: String
+-- help = unlines $
+--     [ "USAGE"
+--     , "  <task> <task description file>"
+--     , "  help <task>"
+--     , "  help"
+--     , ""
+--     , "TASK TYPES"
+--     ] ++ map (("  "++) . shortDescribeTask) tasks
 findTask t = find (compare t . name) tasks
     where compare = (==) `on` map toLower
 
