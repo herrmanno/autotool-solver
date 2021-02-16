@@ -30,13 +30,13 @@ autotool-helper tasks
 ### show description for a specific task
 
 ```
-autotool-helper help <tasktype>
+autotool-helper help <task type>
 ```
 
 ### run task
 
 ```
-autotool-helper <tasktype> <path-to-task-description-file>
+autotool-helper <task type> <task description file>
 ```
 
 Example task description files can be found at [examples](./examples) directory.
