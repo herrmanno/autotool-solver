@@ -2,8 +2,6 @@ module Autotool.Solver.StatementEquivalentSpec (spec) where
 
 import Prelude hiding ((&&), (||))
 import Test.Hspec
-import qualified Data.Map as M
-import Data.Tree (Tree(Node))
 import Autotool.DAO (toValue)
 import qualified Autotool.DAO.Statement as DAO
 import Autotool.TreeSearch (SearchMode(..))

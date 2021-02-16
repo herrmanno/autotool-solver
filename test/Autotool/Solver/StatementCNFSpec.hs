@@ -1,12 +1,10 @@
 module Autotool.Solver.StatementCNFSpec (spec) where
 
 import Prelude hiding ((&&), (||))
-import Data.Function (on)
 import Test.Hspec ( describe, it, shouldBe )
 import Autotool.Data.LazyTree (trees)
 import Autotool.Data.StatementLogic (Statement(..), equiv, var, true, false, (&&), (||), (!), (-->), (<-->))
 import Autotool.Solver.StatementCNF (solve)
-import Debug.Trace (trace, traceShow)
 
 spec =
     describe "CNF for statement" $ do

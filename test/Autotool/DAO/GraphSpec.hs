@@ -1,7 +1,6 @@
 module Autotool.DAO.GraphSpec (spec) where
 
 import Test.Hspec
-import Autotool.Readable
 import qualified Autotool.DAO.Graph as DAO
 
 spec = do

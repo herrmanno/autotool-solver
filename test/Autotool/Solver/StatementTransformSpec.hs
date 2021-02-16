@@ -14,7 +14,7 @@ import Autotool.Data.StatementLogic
     , (-->)
     , (<-->)
     )
-import Autotool.Solver.StatementTransform (solve, JunctorBase)
+import Autotool.Solver.StatementTransform (solve)
 import Data.Tree (Tree(Node))
 
 spec = do

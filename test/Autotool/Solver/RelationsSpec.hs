@@ -6,7 +6,7 @@ import Data.Set (Set)
 import Autotool.DAO (toValue)
 import qualified Autotool.DAO.Set as DAO
 import Autotool.Data.RelOp ( (&), (+), (-), (*) )
-import Autotool.Data.LazyTree ( Tree(Node), Op, mkOp0 )
+import Autotool.Data.LazyTree ( Tree(Node), mkOp0 )
 import Autotool.TreeSearch (SearchMode(..))
 import Autotool.Solver.Relations (solve)
 

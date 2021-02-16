@@ -3,7 +3,6 @@ module Autotool.DAO.StatementSpec (spec) where
 import Prelude hiding ((&&),(||))
 import Test.Hspec
 import Autotool.DAO (toValue)
-import Autotool.Readable
 import Autotool.Data.StatementLogic (true, false, Statement(..), var, (||), (&&), (!), (-->), (<-->))
 import qualified Autotool.DAO.Statement as DAO
 import Data.Tree (Tree(Node))

@@ -7,7 +7,7 @@ import Autotool.DAO (toValue)
 import Autotool.DAO.NestedSet (NestedSet)
 import Autotool.Data.NestedSet (NSet)
 import Autotool.Data.SetOp ( (&), (+), (-), pow )
-import Autotool.Data.LazyTree ( Tree(Node), Op, mkOp0 )
+import Autotool.Data.LazyTree ( Tree(Node), mkOp0 )
 import Autotool.TreeSearch (SearchMode(..))
 import Autotool.Solver.Sets (solve)
 

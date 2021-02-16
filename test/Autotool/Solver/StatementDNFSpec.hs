@@ -1,12 +1,10 @@
 module Autotool.Solver.StatementDNFSpec (spec) where
 
 import Prelude hiding ((&&), (||))
-import Data.Function (on)
 import Test.Hspec ( describe, it, shouldBe )
 import Autotool.Data.LazyTree (trees)
 import Autotool.Data.StatementLogic (Statement(..), equiv, var, true, false, (&&), (||), (!), (-->), (<-->))
 import Autotool.Solver.StatementDNF (solve)
-import Debug.Trace (trace, traceShow)
 
 spec =
     describe "DNF for statement" $ do
