@@ -1,2 +1,8 @@
 cradle:
   stack:
+  - path: "./app/"
+    component: autotool-solver:exe:autotool-helper
+  - path: "./src/"
+    component: autotool-solver:lib
+  - path: "./test/"
+    component: autotool-solver:test:autotool-solver-test
