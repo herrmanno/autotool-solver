@@ -1,3 +1,15 @@
+#checks, if pv is installed
+if ! command -v pv &> /dev/null; then
+    echo "pv is not installed, but needed for the tutorial. Please install (i. e. through \"sudo apt install pv\")!"
+    exit
+fi
+
+#checks, if autotool-helper is installed
+if ! command autotool-helper &> /dev/null; then
+    echo "autotool-helper could not be found. Please install (through \"stack install && stack install\") and make available in PATH variable!"
+    exit
+fi
+
 echo "# Step 1: show available tasks" |pv -qL 12
 sleep .2s
 echo "> autotool-helper tasks" |pv -qL 12
