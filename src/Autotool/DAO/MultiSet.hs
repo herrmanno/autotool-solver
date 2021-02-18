@@ -39,6 +39,9 @@ instance (Readable a, Ord a) => Readable (MultiSet a) where
 instance (Ord b, (DAO b) a ) => (DAO (M.Map b Int)) (MultiSet a) where
     toValue (MultiSet m) = M.mapKeys toValue m
 
+instance (Ord b, (DAO b) a ) => (DAO (MultiSet b)) (M.Map a Int) where
+    toValue m = MultiSet $ M.mapKeys toValue m
+
 
 {- MULTISET OPERATORS -}
 

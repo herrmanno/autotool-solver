@@ -10,6 +10,9 @@ import qualified Autotool.DAO.Identifier as DAO
 
 data Binding a = Binding DAO.Identifier a deriving (Ord,Eq)
 
+instance Functor Binding where
+    fmap f (Binding i a) = Binding i $ f a
+
 instance (Show a) => Show (Binding a) where
     show (Binding i a) = show i ++ " = " ++ show a
 

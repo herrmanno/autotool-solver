@@ -1,3 +1,7 @@
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE RankNTypes #-}
+
 module Tasks.Relations (task) where
 
 import Data.Bifunctor (bimap)
@@ -10,6 +14,7 @@ import qualified Autotool.DAO.Binding as DAO
 import Autotool.Data.LazyTree (Op, mkOp0, showTree)
 import Autotool.Solver.Relations (solve)
 import Autotool.TreeSearch (SearchMode(..), evalModeDescription)
+import qualified Autotool.Data.RelOp as R (RelOpContext(..))
 
 task :: Task
 task = Task
@@ -37,13 +42,18 @@ task = Task
 run :: TaskInput -> TaskResult String
 run input = do
     desc <- readInputM input
-    let ops = toValue (operators desc) :: [Op [Int] (S.Set (Int,Int))]
-        rops = map (uncurry mkOp0 . bimap show toValue . DAO.toPair) (relations desc)
-        u = universe desc
+    let ops = toValue (operators desc) :: [Op (OpContext Int) (S.Set (Int,Int))]
+        rops = map (uncurry mkOp0 . bimap show toValue . DAO.toPair) (relations desc) :: [Op (OpContext Int) (S.Set (Int,Int))]
+        c = OpContext $ universe desc
         t = toValue (target desc) :: S.Set (Int,Int)
         m = mode desc
-        r = solve m (rops ++ ops) u t
+        r = solve m (rops ++ ops) c t
     Result $ showTree r
+
+newtype OpContext a = OpContext [a]
+
+instance (R.RelOpContext a) (OpContext a) where
+    universe (OpContext u) = u
 
 data RelationDescription = RelationDescription
     { mode :: SearchMode
