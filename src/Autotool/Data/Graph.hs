@@ -11,6 +11,8 @@ module Autotool.Data.Graph
     , vertices
     , edges
     , insertEdge
+    , containsEdge
+    , deleteVertex
     , similiar
     , neighbours
     , disconnectedSubgraphs
@@ -72,6 +74,12 @@ edges (_,es) = es
 
 insertEdge :: (Ord a) => Graph a -> (a,a) -> Graph a
 insertEdge (vs,es) e = (vs, S.insert e es)
+
+-- | Removes a vertex and alle edges from / to it
+-- >>> deleteVertex (S.fromList [1,2,3], S.fromList [(1,2), (2,3), (3,1)]) 2
+-- (fromList [1,3],fromList [(3,1)])
+deleteVertex :: (Ord a) => Graph a -> a -> Graph a
+deleteVertex (vs,es) e = (S.delete e vs, S.filter (\(a,b) -> a /= e && b /= e) es)
 
 -- | > containsEdge g (a,b) := (a,b) ∈ edges_G ∨ (b,a) ∈ edges_G
 containsEdge :: (Eq a) => Graph a -> (a,a) -> Bool
