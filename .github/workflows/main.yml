@@ -31,17 +31,17 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
     - name: Cache-stack (Windows)
-        uses: actions/cache@v2
-        if: matrix.os == 'windows-latest'
-        env:
-          cache-name: stack-windows
-        with:
-          path: 'C:\Users\runneradmin\AppData\Local\Programs\stack'
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/stack.yaml.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+      uses: actions/cache@v2
+      if: matrix.os == 'windows-latest'
+      env:
+        cache-name: stack-windows
+      with:
+        path: 'C:\Users\runneradmin\AppData\Local\Programs\stack'
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/stack.yaml.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
     - name: Setup Stack
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: true
