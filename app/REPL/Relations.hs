@@ -76,9 +76,10 @@ instance (Ord a, Readable a) => Readable (Term a) where
             expr3 = P.chainl1 term (spacedString "." $> node2 (*))
             term =
                     variable
-                <|> node1 inverse <$> (spacedString "inverse" *> (variable <|> (openPar *> expr0 <* closePar)))
-                <|> node1 transitiveClosure <$> (spacedString "transitive_cl" *> (variable <|> (openPar *> expr0 <* closePar)))
-                <|> node1 reflexiveClosure <$> (spacedString "reflexive_cl" *> (variable <|> (openPar *> expr0 <* closePar)))
+                <|> node1 inverse <$> (spacedString "inverse" *> term)
+                <|> node1 transitiveClosure <$> (spacedString "transitive_cl" *> term)
+                <|> node1 reflexiveClosure <$> (spacedString "reflexive_cl" *> term)
+                <|> spaced (openPar *> expr0 <* closePar)
             variable = node0 . var <$> spaced (P.satisfy (`elem` ['A'..'Z']))
             var name = mkOp0C [name] (`getVariable` name)
             node0 op = Node op []
