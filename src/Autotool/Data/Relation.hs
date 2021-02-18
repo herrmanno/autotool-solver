@@ -42,9 +42,11 @@ reflexiveClosure c r = r `union` fromList (zip c c)
 -- >>> transitiveClosure (fromList [(1,2), (2,3), (3,1)])
 -- fromList [(1,1),(1,2),(1,3),(2,1),(2,2),(2,3),(3,1),(3,2),(3,3)]
 transitiveClosure :: (Ord a) => Relation a -> Relation a
-transitiveClosure r = unions (r : unfoldr mkTransitive r)
+transitiveClosure r = unions $ uniques (r : unfoldr mkTransitive r)
     where
         mkTransitive r' = let r'' = compose r' r
                           in if r'' == r' || null r''
                                 then Nothing
                                 else Just (r'',r'')
+        uniques xs = go [] xs
+            where go ys (x:xs) = if x `elem` ys then ys else go (x:ys) xs
