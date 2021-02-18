@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 58bfb1f8aa528b9a2553a81c058159c1f6ff6c99169b67813f95de4d2aa21822
+-- hash: e5425e59bdde0529e8b8d71fa299087bb92a40019907900cc94a74ede6968d99
 
 name:           autotool-solver
 version:        0.1.0.0
@@ -69,7 +69,6 @@ library
       Autotool.Solver.StatementTransform
       Autotool.Solver.Structures
       Autotool.TreeSearch
-      Autotool.Util.Hash
   other-modules:
       Paths_autotool_solver
   hs-source-dirs:
@@ -79,6 +78,7 @@ library
     , containers >=0.5.6 && <6
     , deepseq >=1.1.0.2 && <2
     , file-embed >=0.0.13.0 && <1
+    , haskeline >=0.8.1.1 && <1
     , parallel >=3.2.2.0 && <4
     , pretty-simple >=4.0.0.0 && <5
     , text
@@ -88,6 +88,10 @@ executable autotool-helper
   main-is: Main.hs
   other-modules:
       App
+      Repl
+      REPL.MultiSets
+      REPL.Relations
+      REPL.Sets
       Task
       Tasks.Bipartit
       Tasks.Circle
@@ -114,6 +118,7 @@ executable autotool-helper
     , containers >=0.5.6 && <6
     , deepseq >=1.1.0.2 && <2
     , file-embed >=0.0.13.0 && <1
+    , haskeline >=0.8.1.1 && <1
     , parallel >=3.2.2.0 && <4
     , pretty-simple >=4.0.0.0 && <5
     , text
@@ -155,6 +160,7 @@ test-suite autotool-solver-test
     , containers >=0.5.6 && <6
     , deepseq >=1.1.0.2 && <2
     , file-embed >=0.0.13.0 && <1
+    , haskeline >=0.8.1.1 && <1
     , hspec
     , parallel >=3.2.2.0 && <4
     , pretty-simple >=4.0.0.0 && <5

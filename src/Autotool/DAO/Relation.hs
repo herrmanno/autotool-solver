@@ -11,7 +11,7 @@ import Control.Applicative (Alternative((<|>)))
 import Data.Functor (($>))
 import Autotool.DAO (DAO(..))
 import Autotool.Readable (Readable(..), spaces)
-import Autotool.Data.RelOp ((+), (-), (&), (*), inverse, reflexiveClosure, transitiveClosure)
+import Autotool.Data.RelOp ((+), (-), (&), (*), inverse, reflexiveClosure, transitiveClosure, RelOpContext)
 import Autotool.Data.LazyTree (Op)
 
 {- Relation OPERATIONS -}
@@ -48,7 +48,7 @@ instance Readable (RelOp a) where
             readReflexiveCl = (spaces >> P.string "reflexive_cl" >> spaces) $>  OpReflexiveClosure
             readTransitivecl = (spaces >> P.string "transitive_cl" >> spaces) $>  OpTransitiveClosure
 
-instance (Num a, Ord a) => (DAO (Op [a] (Set (a,a)))) (RelOp a) where
+instance (Num a, Ord a, (RelOpContext a) c) => (DAO (Op c (Set (a,a)))) (RelOp a) where
     toValue OpSum = (+)
     toValue OpUnion = (&)
     toValue OpDiff = (-)

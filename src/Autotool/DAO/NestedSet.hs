@@ -43,6 +43,9 @@ instance (Readable a, Ord a) => Readable (NestedSet a) where
 instance (DAO (NSet a)) (NestedSet a) where
     toValue (NestedSet s) = s
 
+instance (DAO (NestedSet a)) (NSet a) where
+    toValue ns = NestedSet ns
+
 
 {- (NESTED) SET OPERATIONS -}
 

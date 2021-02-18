@@ -100,7 +100,6 @@ defaultTaskInput = TaskInput { input = undefined, parallel = True, limit = 25000
 shortDescribeTask :: Task -> String
 shortDescribeTask t = unwords
     [ name t ++ replicate (10 - length (name t)) ' '
-    -- , "(" ++ autotoolName t ++ ")" ++ replicate (20 - length (autotoolName t)) ' '
     , ":: "
     , description t
     ]

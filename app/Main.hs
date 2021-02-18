@@ -6,17 +6,19 @@ import Paths_autotool_solver as Mod ( version )
 import Data.Version (showVersion)
 import Data.FileEmbed (embedStringFile)
 import Task (TaskInput(input), defaultTaskInput, TaskResult(..))
-import App (app, taskHelp, taskTypeDescriptions)
+import App (app, repl, taskHelp, taskTypeDescriptions, replDescriptions)
 
 main = do
     args <- getArgs
     out <- catch (go args) onError
     putStrLn out
     where
-        go ["license"] = return $ $(embedStringFile "LICENSE")
+        go ["license"] = return $(embedStringFile "LICENSE")
         go ["version"] = return $ showVersion Mod.version
         go ["tasks"] = return $ unlines taskTypeDescriptions
+        go ["repls"] = return $ unlines replDescriptions
         go ["help", taskname] = return $ taskHelp taskname
+        go ["repl", command] = repl command
         go [command,filename] = do
             input <- readFile filename
             let taskInput = defaultTaskInput { Task.input = input }
@@ -30,6 +32,8 @@ usage = unlines
     , "  run task:              <task> <task description file>"
     , "  show task types:       tasks"
     , "  show task description: help <task>"
+    , "  repl repl:             repl <type>"
+    , "  show repl types:       repls"
     , "  show usage:            help"
     , "  show version:          version"
     , "  show license:          license"

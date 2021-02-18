@@ -31,6 +31,9 @@ instance (DAO (S.Set a)) (Set a) where
     toValue (Set s) = s
     toValue (BrSet s) = s
 
+instance (Ord a) => (DAO (Set a)) (S.Set a) where
+    toValue = mkBrSet . S.toList
+
 -- |Only for internal usage
 mkSet :: (Ord a) => [a] -> Set a
 mkSet = Set . S.fromList
