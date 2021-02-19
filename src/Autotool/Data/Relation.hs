@@ -48,5 +48,8 @@ transitiveClosure r = unions $ uniques (r : unfoldr mkTransitive r)
                           in if r'' == r' || null r''
                                 then Nothing
                                 else Just (r'',r'')
+        uniques [] = []
         uniques xs = go [] xs
-            where go ys (x:xs) = if x `elem` ys then ys else go (x:ys) xs
+            where
+                go ys [] = ys
+                go ys (x:xs) = if x `elem` ys then ys else go (x:ys) xs
