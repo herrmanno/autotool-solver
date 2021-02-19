@@ -5,7 +5,7 @@ import Test.Hspec
 import Data.Set (Set)
 import Autotool.DAO (toValue)
 import qualified Autotool.DAO.Set as DAO
-import Autotool.Data.RelOp ( (&), (+), (-), (*) )
+import Autotool.Data.RelOp ( (&), (+), (-), (*), inverse, transitiveClosure, reflexiveClosure )
 import Autotool.Data.LazyTree ( Tree(Node), mkOp0 )
 import Autotool.TreeSearch (SearchMode(..))
 import Autotool.Solver.Relations (solve)
@@ -82,6 +82,24 @@ spec = do
                                 Node s []
                             ],
                             Node r []
+                        ]
+                    ]
+            in solve (Parallel 10000) ops u  t `shouldBe` result
+        it "finds term w/ a target value from a set of relations and operations (including inverse, transitive_cl, reflexive_cl)" $
+            let
+                r = mkOp0 "r" $ readSet "{(1 , 2) , (4 , 3)}"
+                s = mkOp0 "s" $ readSet "{(1 , 3) , (2 , 4)}"
+                t = readSet "{(3 , 1)}"
+                u = [1,2,3,4] :: [Int]
+                ops = [ r, s, (+), (&), (-), (*), inverse, transitiveClosure, reflexiveClosure ]
+                result =
+                    Node inverse [
+                        Node (*) [
+                            Node r [],
+                            Node (*) [
+                                Node s [],
+                                Node r []
+                            ]
                         ]
                     ]
             in solve (Parallel 10000) ops u  t `shouldBe` result
