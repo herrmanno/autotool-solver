@@ -4,8 +4,10 @@
 
 Helper tool for solving arbritary autotool tasks of the course 'Modellierung WS 20' by brute force.
 
+**DISCLAIMER**
+
 This tool is meant to be used *only* as a help if one just can't find a solution to a given
-task; sometims it's easier to understand a problem by lookuing at the solution ;)
+task; sometims it's easier to understand a problem by looking at the solution ;)
 
 This tool is *not meant* to be used for cheating, solving highscore tasks or similiar intentions.
 
@@ -59,5 +61,10 @@ autotool-helper
 ```
 stack test
 ```
+
+## Prebuild Binaries
+
+Prebuilt binaries can be found at the Repo's
+[Releases page](https://github.com/herrmanno/autotool-solver/releases).
 
 [stack]: https://docs.haskellstack.org/en/stable/README/
